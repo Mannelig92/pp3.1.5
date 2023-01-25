@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Пользователи</title>
+</head>
+<body>
+<h1>Пользователи</h1>
+<div>
+    <table border="1">
+        <thead>
+        <tr>
+            <th scope="col">Имя</th>
+            <th scope="col">Фамилия</th>
+            <th scope="col">Почта</th>
+            <th scope="col">Изменить</th>
+            <th scope="col">Посмотреть</th>
+            <th scope="col">Удалить</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user: ${allUsers}">
+            <td th:text="${user.getName()}">user</td>
+            <td th:text="${user.getLastName()}">user</td>
+            <td th:text="${user.getEmail()}">user</td>
+            <td> <button> <a th:href="@{/lesson/{id}/edit(id=${user.getId()})}">Жмяк</a> </button> </td>
+            <td> <button> <a th:href="@{/lesson/{id}/showUser(id=${user.getId()})}">Жмяк</a> </button> </td>
+            <td>
+                <form th:method="DELETE" th:action="@{/lesson/{id}/delete(id=${user.getId()})}">
+                    <input type="submit" value="Delete"/>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+<br>
+<hr/>
+<a href="/lesson/newUser"><h3>Создать нового пользователя</h3></a>
+<br>
+<hr/>
+<a href="/lesson"><h3>Главная страница</h3></a>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавить пользователя</title>
+</head>
+<body>
+<h1>Добавить пользователя</h1>
+<form th:method="POST" th:action="@{/lesson}" th:object="${user}">
+    <label for="name">Enter name: </label>
+    <input type="text" th:field="*{name}" id="name"/>
+    <br/>
+    <label for="lastName">Enter lastname: </label>
+    <input type="text" th:field="*{lastName}" id="lastName"/>
+    <br/>
+    <label for="email">Enter email: </label>
+    <input type="text" th:field="*{email}" id="email"/>
+    <br/>
+    <input type="submit" value="Create!"/>
+</form>
+<br>
+<hr/>
+<a href="/lesson/allUsers"><h3>Все пользователи</h3></a>
+<br>
+<hr/>
+<a href="/lesson"><h3>Главная страница</h3></a>
+</body>
+</html>
