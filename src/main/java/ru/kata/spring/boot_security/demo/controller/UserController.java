@@ -75,11 +75,11 @@ public class UserController {
         return "edit";
     }
 
-    @PatchMapping(value = "/{id}")
-    public String update(@ModelAttribute("user") User user) {
-        userService.editUser(user);
-        return "redirect:/lesson/allUsers";
-    }
+//    @PatchMapping(value = "/{id}")
+//    public String update(@ModelAttribute("user") User user) {
+//        userService.editUser(user);
+//        return "redirect:/lesson/allUsers";
+//    }
 
     @DeleteMapping(value = "/{id}/delete")
     public String delete(@PathVariable("id") long id) {

@@ -1,28 +1,57 @@
 package ru.kata.spring.boot_security.demo.model;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.Collection;
 
+/*
+UserDetails можно представить, как адаптер между БД пользователейи тем что требуется Spring Security внутри
+SecurityContextHolder.
+ */
 @Entity
-public class User {
+@Table(name = "users")
+public class User implements UserDetails {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name = "name")
-    private String name;
+    @Column(name = "user_name")
+    private String userName;
     @Column(name = "last_name")
     private String lastName;
+    @Column(name = "age")
+    private int age;
+    @Column(name = "password")
+    private String password;
     @Column(name = "email")
     private String email;
+    //    @ManyToMany //Понять всё и дописать
+//    @JoinTable(name = "Users_Roles",
+//            joinColumns = @JoinColumn(name = "user_id"), //id в таблице юзерс
+//            inverseJoinColumns = @JoinColumn(name = "role_id")) //id в таблице roles
+//    private Collection<Role> roles;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Collection<Role> roles;
 
     public User() {
     }
 
-    public User(String name, String lastName, String email) {
-        this.name = name;
+    public User(String userName, String lastName, int age, String password, String email) {
+        this.userName = userName;
         this.lastName = lastName;
+        this.age = age;
+        this.password = password;
         this.email = email;
+    }
+
+    public Collection<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Collection<Role> roles) {
+        this.roles = roles;
     }
 
     public long getId() {
@@ -33,12 +62,12 @@ public class User {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getLastName() {
@@ -47,6 +76,23 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getEmail() {
@@ -58,12 +104,45 @@ public class User {
     }
 
     @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return getRoles();
+    }
+
+    @Override
+    public String getUsername() {
+        return userName;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() { //аккаунт не просрочен
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() { //аккаунт не заблокирован
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() { //пароль не просрочен
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() { //аккаунт включён, работает
+        return true;
+    }
+
+    @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", firstName='" + userName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", email=" + email +
+                ", age=" + age +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", roles=" + roles +
                 '}';
     }
 }
