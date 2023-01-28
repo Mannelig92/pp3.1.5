@@ -7,17 +7,17 @@ import java.util.List;
 public class Role implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @Column(name = "name")
     private String name;
     @ManyToMany(mappedBy = "roles") //ссылаемся на коллекцию в юзерс
     private List<User> users;
     public Role() {
     }
-    public Role(long id) {
+    public Role(Long id) {
         this.id = id;
     }
-    public Role(long id, String name) {
+    public Role(Long id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -27,10 +27,10 @@ public class Role implements GrantedAuthority {
     public void setUsers(List<User> users) {
         this.users = users;
     }
-    public long getId() {
+    public Long getId() {
         return id;
     }
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
     public String getName() {

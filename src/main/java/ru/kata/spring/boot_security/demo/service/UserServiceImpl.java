@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService, UserDetailsService { //Клас
         if (userDB.isEmpty()) {
             return false;
         }
-        user.setRoles(Collections.singleton(new Role(1, "ROLE_USER")));
+        user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
 //        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
         return true;
