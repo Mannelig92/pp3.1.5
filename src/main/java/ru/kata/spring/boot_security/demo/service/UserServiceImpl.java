@@ -1,6 +1,8 @@
 package ru.kata.spring.boot_security.demo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -10,9 +12,11 @@ import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /*
 этот класс представляет собой сервис – компонент сервис-слоя.
@@ -21,8 +25,9 @@ import java.util.Optional;
  */
 @Service //Сервис является соединительным звеном между Контроллером и Дао
 public class UserServiceImpl implements UserService, UserDetailsService { //Класс сервиса для работы с вэбом
-    @Autowired
+
     private UserRepository userRepository;
+    private User user;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository) {
@@ -57,6 +62,7 @@ public class UserServiceImpl implements UserService, UserDetailsService { //Клас
 
     @Override
     public List<User> getAllUsers() {
+//        user = new User("Harry","Potter",27,"12345","@mail.ru");
         return userRepository.findAll();
     }
 
@@ -67,19 +73,28 @@ public class UserServiceImpl implements UserService, UserDetailsService { //Клас
 //        userEdit.set
 //    }
     @Override
-    public User getUser(long id) {
+    public User getUser(long id) { //Получение юзера по айди
         Optional<User> userFromDB = userRepository.findById(id);
         return userFromDB.orElse(new User());
+    }
+    public Optional<User> findByUserName(String username){ //получение юзера по имени
+        return userRepository.findByUserName(username);
     }
 
     @Override
     @Transactional
     //Загружает пользователя по имени пользователя
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> user = userRepository.findByUserName(username);
+        Optional<User> user = findByUserName(username);
         if (user.isEmpty()) {
             throw new UsernameNotFoundException(String.format("User '%s' not found", username));
         }
-        return user.get(); //Не уверен
+        return new org.springframework.security.core.userdetails.User(user.get().getUserName(),
+                user.get().getPassword(), mapRolesToAuthorities(user.get().getRoles()));
+    }
+    //Метод из коллекции ролей получает коллекцию прав доступа
+    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles){
+        return roles.stream().
+                map(x -> new SimpleGrantedAuthority(x.getName())).collect(Collectors.toList());
     }
 }

@@ -13,7 +13,7 @@ public class SpringBootSecurityDemoApplication {
 		//Для автоматического запуска браузера
 		Runtime rt = Runtime.getRuntime();
 		try {
-			rt.exec("cmd /c start chrome.exe http://localhost:8080");
+			rt.exec("cmd /c start chrome.exe http://localhost:8080/lesson");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
