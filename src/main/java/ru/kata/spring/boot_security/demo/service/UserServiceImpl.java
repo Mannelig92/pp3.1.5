@@ -6,6 +6,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.model.Role;
@@ -27,7 +28,9 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService, UserDetailsService { //Класс сервиса для работы с вэбом
 
     private UserRepository userRepository;
-    private User user;
+//    private User user;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository) {
@@ -43,12 +46,12 @@ public class UserServiceImpl implements UserService, UserDetailsService { //Клас
     @Transactional
     public boolean saveUser(User user) {
         Optional<User> userDB = userRepository.findByUserName(user.getUserName());
-        if (userDB.isEmpty()) {
+        if (userDB.isPresent()) {
             return false;
         }
-        user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
-//        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
+//        user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepository.saveAndFlush(user);
         return true;
     }
 
@@ -89,8 +92,9 @@ public class UserServiceImpl implements UserService, UserDetailsService { //Клас
         if (user.isEmpty()) {
             throw new UsernameNotFoundException(String.format("User '%s' not found", username));
         }
-        return new org.springframework.security.core.userdetails.User(user.get().getUserName(),
-                user.get().getPassword(), mapRolesToAuthorities(user.get().getRoles()));
+//        return new org.springframework.security.core.userdetails.User(user.get().getUserName(),
+//                user.get().getPassword(), mapRolesToAuthorities(user.get().getRoles()));
+        return user.get();
     }
     //Метод из коллекции ролей получает коллекцию прав доступа
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles){

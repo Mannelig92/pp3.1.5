@@ -6,8 +6,10 @@
 </head>
 <body>
 <h1>Пользователь</h1>
-<p th:text="${user.getName()}">VALUE</p>
+<p th:text="${user.getUserName()}">VALUE</p>
 <p th:text="${user.getLastName()}">VALUE</p>
+<p th:text="${user.getAge()}">VALUE</p>
+<p th:text="${user.getPassword()}">VALUE</p>
 <p th:text="${user.getEmail()}">VALUE</p>
 <br/>
 <form th:method="DELETE" th:action="@{/lesson/{id}/delete(id=${user.getId()})}">

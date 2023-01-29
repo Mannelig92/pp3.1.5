@@ -27,13 +27,13 @@ public class User implements UserDetails {
     private String password;
     @Column(name = "email")
     private String email;
-    //    @ManyToMany //Понять всё и дописать
-//    @JoinTable(name = "Users_Roles",
-//            joinColumns = @JoinColumn(name = "user_id"), //id в таблице юзерс
-//            inverseJoinColumns = @JoinColumn(name = "role_id")) //id в таблице roles
-//    private Collection<Role> roles;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER) //Понять всё и дописать
+    @JoinTable(name = "Users_Roles",
+            joinColumns = @JoinColumn(name = "users_id"), //id в таблице юзерс
+            inverseJoinColumns = @JoinColumn(name = "roles_id")) //id в таблице roles
     private Collection<Role> roles;
+//    @ManyToMany(fetch = FetchType.EAGER)
+//    private Collection<Role> roles;
 
     public User() {
     }

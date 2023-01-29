@@ -23,7 +23,6 @@ public class UserController {
     /*
     ƒалее дл€ создани€ методов дл€ сайта используем аннотации CRUD(Create,Read,Update,Delete)
      - Get, Post, Put, Delete, Patch, и другие.
-
     @GetMapping Ч ќбрабатывает get-запросы.Ќичего не мен€ет на сервере, не добавл€ет, не измен€ет,
      просто получает данные с сервера
      */
@@ -32,20 +31,8 @@ public class UserController {
         return "mainPage";
     }
 
-    /*
-    Mapping св€зывают методы контроллера с тем адресом к которым мы можем обратитьс€ из браузера
-    ¬сего 5 видов Mapping в зависимость от того какой http-запрос должен прийти в этот метод контроллера
-    Model это логика работы с данными.
-     */
-    @GetMapping(value = "/allUsers") //ќтображение страницы url
-    public String showAllUsers(Model model) { //вывод всех юзеров
-        //кладЄм в model пару ключ,значение. ¬ Thymeleaf используем значение по ключу
-        model.addAttribute("allUsers", userService.getAllUsers()); //allUsers имеет отношение в Thymeleaf
-        return "allUsers"; //отношение к html файлу по такому же названию
-    }
-
     @GetMapping(value = "/newUser")
-    public String saveNewUser(@ModelAttribute("user") User user) { //ƒобавление нового юзера
+    public String authentication(@ModelAttribute("user") User user) { //ƒобавление нового юзера
         return "newUser";
     }
 

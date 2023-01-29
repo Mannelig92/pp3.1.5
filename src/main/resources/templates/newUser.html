@@ -5,13 +5,19 @@
     <title>Добавить пользователя</title>
 </head>
 <body>
-<h1>Добавить пользователя</h1>
+<h1>Регистрация пользователя</h1>
 <form th:method="POST" th:action="@{/lesson}" th:object="${user}">
     <label for="name">Enter name: </label>
-    <input type="text" th:field="*{name}" id="name"/>
+    <input type="text" th:field="*{userName}" id="name"/>
     <br/>
     <label for="lastName">Enter lastname: </label>
     <input type="text" th:field="*{lastName}" id="lastName"/>
+    <br/>
+    <label for="age">Enter age: </label>
+    <input type="text" th:field="*{age}" id="age"/>
+    <br/>
+    <label for="password">Enter password: </label>
+    <input type="text" th:field="*{password}" id="password"/>
     <br/>
     <label for="email">Enter email: </label>
     <input type="text" th:field="*{email}" id="email"/>
