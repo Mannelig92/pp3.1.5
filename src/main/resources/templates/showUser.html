@@ -12,15 +12,19 @@
 <p th:text="${user.getPassword()}">VALUE</p>
 <p th:text="${user.getEmail()}">VALUE</p>
 <br/>
-<form th:method="DELETE" th:action="@{/lesson/{id}/delete(id=${user.getId()})}">
+<form th:method="DELETE" th:action="@{/lesson/admin/{id}/delete(id=${user.getId()})}">
     <input type="submit" value="Delete"/>
 </form>
 <br>
 <hr/>
-<button> <a th:href="@{/lesson/{id}/edit(id=${user.getId()})}">Изменить пользователя</a> </button>
+<button> <a th:href="@{/lesson/admin/{id}/edit(id=${user.getId()})}">Изменить пользователя</a> </button>
 <br>
 <hr/>
-<a href="/lesson/newUser"><h3>Создать нового пользователя</h3></a>
+<div>
+    <form action="/logout" method="post">
+        <input type="submit" value="Sign Out"/>
+    </form>
+</div>
 <br>
 <hr/>
 <a href="/lesson"><h3>Главная страница</h3></a>

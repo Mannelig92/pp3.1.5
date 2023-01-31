@@ -27,9 +27,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 //Это строкой мы говорим предоставить разрешения для следующих url.
+                //Эти ссылки не будут требовать регистрации
                 .authorizeRequests()
-                .antMatchers("/lesson/").permitAll()
-//                .anyRequest().authenticated()
+                .antMatchers("/lesson","/lesson/newUser").permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .formLogin().successHandler(successUserHandler)
                 .permitAll()

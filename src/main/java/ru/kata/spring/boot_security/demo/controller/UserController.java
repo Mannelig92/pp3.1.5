@@ -6,17 +6,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.UserService;
+import ru.kata.spring.boot_security.demo.service.UserServiceImpl;
 
 //Помечаем что это класс контроллера для работы с thymeleaf
 @Controller
 //@RequestMapping помечает общий URL-адрес для каждого метода, например /lesson/allUsers
 @RequestMapping("/lesson")
 public class UserController {
-    private UserService userService;
+    private UserServiceImpl userService;
 
     //Подключаем Service через конструктор. Лучше через него, а не через поле или сэттэр
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserServiceImpl userService) {
         this.userService = userService;
     }
 
@@ -35,7 +36,6 @@ public class UserController {
     public String authentication(@ModelAttribute("user") User user) { //Добавление нового юзера
         return "newUser";
     }
-
     /*
     @PostMapping-Post-запрос изменяет что-то на сервере, например создаём новую учётную запись,
      делаем пост, загружаем фото
@@ -51,26 +51,17 @@ public class UserController {
         model.addAttribute("user", userService.getUser(id));
         return "showUser";
     }
-
-    //получение юзера по id. вместо id можно будет поместить число и с помощью аннотации PathVariable
-    //мы извлёчём этот id из url и получим к нему доступ
-    //PathVariable предоставит этот id
-    @GetMapping(value = "/{id}/edit")
-    public String editUser(@PathVariable("id") long id, Model model) {
-        //Получаем текущего человека по его id
-        model.addAttribute("user", userService.getUser(id));
-        return "edit";
-    }
-
-//    @PatchMapping(value = "/{id}")
-//    public String update(@ModelAttribute("user") User user) {
-//        userService.editUser(user);
-//        return "redirect:/lesson/allUsers";
+//    @GetMapping("/registration")
+//    public String registration(){
+//        return "registration";
+//    }
+//    @PostMapping("/registration")
+//    public String addUser(User user){
+//        userService.findByUserName(user.getUserName());
+//        user.setRoles();
+//        userService.saveUser(user);
+//        return "redirect:/login";
 //    }
 
-    @DeleteMapping(value = "/{id}/delete")
-    public String delete(@PathVariable("id") long id) {
-        userService.removeUserById(id);
-        return "redirect:/lesson/allUsers";
-    }
+
 }

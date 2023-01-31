@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>Изменение человека</h1>
-<form th:method="PATCH" th:action="@{/lesson/{id}(id=${user.getId()})}" th:object="${user}">
+<form th:method="PATCH" th:action="@{/lesson/admin/{id}(id=${user.getId()})}" th:object="${user}">
     <label for="name">Enter name: </label>
     <input type="text" th:field="*{name}" id="name"/>
     <br/>
@@ -21,7 +21,7 @@
 </form>
 <br>
 <hr/>
-<a href="/lesson/allUsers"><h3>Все пользователи</h3></a>
+<a href="/lesson/admin/allUsers"><h3>Все пользователи</h3></a>
 <br>
 <hr/>
 <a href="/lesson"><h3>Главная страница</h3></a>

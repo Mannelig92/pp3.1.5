@@ -10,7 +10,7 @@
     <table border="1">
         <thead>
         <tr>
-            <th scope="col">Никнейм</th>
+            <th scope="col">Имя</th>
             <th scope="col">Фамилия</th>
             <th scope="col">Возраст</th>
             <th scope="col">Пароль</th>
@@ -21,16 +21,16 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="user: ${allUsers}">
+        <tr th:each="user: ${admin}">
             <td th:text="${user.getUserName()}">user</td>
             <td th:text="${user.getLastName()}">user</td>
             <td th:text="${user.getAge()}">user</td>
             <td th:text="${user.getPassword()}">user</td>
             <td th:text="${user.getEmail()}">user</td>
-            <td> <button> <a th:href="@{/lesson/{id}/edit(id=${user.getId()})}">Жмяк</a> </button> </td>
-            <td> <button> <a th:href="@{/lesson/{id}/showUser(id=${user.getId()})}">Жмяк</a> </button> </td>
+            <td> <button> <a th:href="@{/lesson/admin/{id}/edit(id=${user.getId()})}">Жмяк</a> </button> </td>
+            <td> <button> <a th:href="@{/lesson/admin/{id}/showUser(id=${user.getId()})}">Жмяк</a> </button> </td>
             <td>
-                <form th:method="DELETE" th:action="@{/lesson/{id}/delete(id=${user.getId()})}">
+                <form th:method="DELETE" th:action="@{/lesson//admin/{id}/delete(id=${user.getId()})}">
                     <input type="submit" value="Delete"/>
                 </form>
             </td>
