@@ -51,4 +51,9 @@ public class AdminController {
         userService.removeUserById(id);
         return "redirect:/lesson/admin";
     }
+    @GetMapping(value = "/{id}/showUser")
+    public String showUser(@PathVariable("id") long id, Model model) {
+        model.addAttribute("user", userService.getUser(id));
+        return "showUser";
+    }
 }

@@ -4,9 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
-import ru.kata.spring.boot_security.demo.service.UserService;
 import ru.kata.spring.boot_security.demo.service.UserServiceImpl;
+
+import java.security.Principal;
 
 //ѕомечаем что это класс контроллера дл€ работы с thymeleaf
 @Controller
@@ -36,21 +38,26 @@ public class UserController {
     public String authentication(@ModelAttribute("user") User user) { //ƒобавление нового юзера
         return "newUser";
     }
+
     /*
     @PostMapping-Post-запрос измен€ет что-то на сервере, например создаЄм новую учЄтную запись,
      делаем пост, загружаем фото
      */
     @PostMapping()
-    public String save(@ModelAttribute("user") User user) {
+    public String save(@ModelAttribute("user") User user, Model model) {
+        model.addAttribute("role", new Role());
         userService.saveUser(user);
-        return "redirect:/lesson/allUsers"; //ѕосле выполнени€ метода переходить по данному url
+        return "redirect:/lesson"; //ѕосле выполнени€ метода переходить по данному url
     }
-
-    @GetMapping(value = "/{id}/showUser")
-    public String showUser(@PathVariable("id") long id, Model model) {
-        model.addAttribute("user", userService.getUser(id));
+    //Principal запоминает данные об авторизованном пользователе
+    @GetMapping("/showUser")
+    public String showUser(Principal principal, Model model) {
+        User user = userService.findByUserName(principal.getName()).get();
+        model.addAttribute("user", user);
         return "showUser";
     }
+
+
 //    @GetMapping("/registration")
 //    public String registration(){
 //        return "registration";

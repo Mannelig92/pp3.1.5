@@ -6,24 +6,32 @@
 </head>
 <body>
 <h1>Пользователь</h1>
-<p th:text="${user.getUserName()}">VALUE</p>
-<p th:text="${user.getLastName()}">VALUE</p>
-<p th:text="${user.getAge()}">VALUE</p>
-<p th:text="${user.getPassword()}">VALUE</p>
-<p th:text="${user.getEmail()}">VALUE</p>
-<br/>
-<form th:method="DELETE" th:action="@{/lesson/admin/{id}/delete(id=${user.getId()})}">
-    <input type="submit" value="Delete"/>
-</form>
-<br>
-<hr/>
-<button> <a th:href="@{/lesson/admin/{id}/edit(id=${user.getId()})}">Изменить пользователя</a> </button>
-<br>
-<hr/>
 <div>
-    <form action="/logout" method="post">
-        <input type="submit" value="Sign Out"/>
-    </form>
+    <table border="1">
+        <thead>
+        <tr>
+            <th scope="col">Имя</th>
+            <th scope="col">Фамилия</th>
+            <th scope="col">Возраст</th>
+            <th scope="col">Пароль</th>
+            <th scope="col">Почта</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="users: ${user}">
+            <td th:text="${users.getUserName()}">user</td>
+            <td th:text="${users.getLastName()}">user</td>
+            <td th:text="${users.getAge()}">user</td>
+            <td th:text="${users.getPassword()}">user</td>
+            <td th:text="${users.getEmail()}">user</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<br/>
+<br>
+<div>
+<a href="/logout">Logout</a>
 </div>
 <br>
 <hr/>

@@ -35,8 +35,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin().successHandler(successUserHandler)
                 .permitAll()
                 .and()
-                .logout()
-                .permitAll();
+                //логаут по вызову первой ссылки, вторая это перенаправление после логаута
+                .logout().logoutUrl("/logout").logoutSuccessUrl("/lesson");
     }
 
     // аутентификация inMemory

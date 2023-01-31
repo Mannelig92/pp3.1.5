@@ -37,11 +37,15 @@
         </tr>
         </tbody>
     </table>
-
+</div>
+<div>
+    <form th:action="@{/logout}" th:method="POST">
+        <input type="submit" value="Sign Out"/>
+    </form>
 </div>
 <br>
 <hr/>
-<a href="/lesson/newUser"><h3>Создать нового пользователя</h3></a>
+<a href="/lesson/newUser"><h3>Регистрация пользователя</h3></a>
 <br>
 <hr/>
 <a href="/lesson"><h3>Главная страница</h3></a>

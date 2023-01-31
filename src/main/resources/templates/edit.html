@@ -5,7 +5,7 @@
     <title>Edit</title>
 </head>
 <body>
-<h1>Изменение человека</h1>
+<h1>Изменение пользователя</h1>
 <form th:method="PATCH" th:action="@{/lesson/admin/{id}(id=${user.getId()})}" th:object="${user}">
     <label for="name">Enter name: </label>
     <input type="text" th:field="*{name}" id="name"/>
