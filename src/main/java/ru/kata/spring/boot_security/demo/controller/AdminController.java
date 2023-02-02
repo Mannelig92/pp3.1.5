@@ -3,21 +3,22 @@ package ru.kata.spring.boot_security.demo.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.service.RoleServiceImpl;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 @Controller
 @RequestMapping("/lesson/admin")
 public class AdminController {
     private UserService userService;
+    private RoleServiceImpl roleServiceImpl;
 
     //Подключаем Service через конструктор. Лучше через него, а не через поле или сэттэр
     @Autowired
-    public AdminController(UserService userService) {
+    public AdminController(UserService userService, RoleServiceImpl roleServiceImpl) {
         this.userService = userService;
+        this.roleServiceImpl = roleServiceImpl;
     }
     /*
     Mapping связывают методы контроллера с тем адресом к которым мы можем обратиться из браузера
@@ -40,11 +41,11 @@ public class AdminController {
         return "edit";
     }
 
-//    @PatchMapping(value = "/{id}")
-//    public String update(@ModelAttribute("user") User user) {
-//        userService.editUser(user);
-//        return "redirect:/lesson/allUsers";
-//    }
+    @PatchMapping(value = "/{id}")
+    public String update(@ModelAttribute("user") User user) {
+        userService.editUser(user);
+        return "redirect:/lesson/admin";
+    }
 
     @DeleteMapping(value = "/{id}/delete")
     public String delete(@PathVariable("id") long id) {

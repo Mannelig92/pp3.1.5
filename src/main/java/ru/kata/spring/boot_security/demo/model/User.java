@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 
 /*
 UserDetails можно представить, как адаптер между БД пользователейи тем что требуется Spring Security внутри
@@ -14,7 +15,7 @@ SecurityContextHolder.
 @Table(name = "users")
 public class User implements UserDetails {
     @Id
-    @Column(name = "id")
+    @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "first_name")
@@ -29,9 +30,9 @@ public class User implements UserDetails {
     private String email;
     @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER) //Понять всё и дописать
     @JoinTable(name = "Users_Roles",
-            joinColumns = @JoinColumn(name = "users_id"), //id в таблице юзерс
-            inverseJoinColumns = @JoinColumn(name = "roles_id")) //id в таблице roles
-    private Collection<Role> roles;
+            joinColumns = @JoinColumn(name = "user_id"), //id в таблице юзерс
+            inverseJoinColumns = @JoinColumn(name = "role_id")) //id в таблице roles
+    private List<Role> roles;
 //    @ManyToMany(fetch = FetchType.EAGER)
 //    private Collection<Role> roles;
 
@@ -46,11 +47,11 @@ public class User implements UserDetails {
         this.email = email;
     }
 
-    public Collection<Role> getRoles() {
+    public List<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(Collection<Role> roles) {
+    public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
 
@@ -105,7 +106,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return getRoles();
+        return roles;
     }
 
     @Override

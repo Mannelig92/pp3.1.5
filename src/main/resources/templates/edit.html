@@ -8,10 +8,16 @@
 <h1>Изменение пользователя</h1>
 <form th:method="PATCH" th:action="@{/lesson/admin/{id}(id=${user.getId()})}" th:object="${user}">
     <label for="name">Enter name: </label>
-    <input type="text" th:field="*{name}" id="name"/>
+    <input type="text" th:field="*{userName}" id="name"/>
     <br/>
     <label for="lastName">Enter lastname: </label>
     <input type="text" th:field="*{lastName}" id="lastName"/>
+    <br/>
+    <label for="age">Enter age: </label>
+    <input type="text" th:field="*{age}" id="age"/>
+    <br/>
+    <label for="password">Enter password: </label>
+    <input type="text" th:field="*{password}" id="password"/>
     <br/>
     <label for="email">Enter email: </label>
     <input type="text" th:field="*{email}" id="email"/>
@@ -21,9 +27,6 @@
 </form>
 <br>
 <hr/>
-<a href="/lesson/admin/allUsers"><h3>Все пользователи</h3></a>
-<br>
-<hr/>
-<a href="/lesson"><h3>Главная страница</h3></a>
+<a href="/lesson/admin"><h3>Все пользователи</h3></a>
 </body>
 </html>

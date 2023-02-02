@@ -25,12 +25,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+    /*
+    permitAll мы говорим предоставить разрешения для следующих url.
+    Эти ссылки не будут требовать регистрации
+    hasRole предоставляет доступ пользователям с ролью
+    Проверка идёт сверху вниз, применяется первое подходящее правило
+    hasAnyRole страницам даёт доступ ко всем остальным
+     */
         http
-                //Это строкой мы говорим предоставить разрешения для следующих url.
-                //Эти ссылки не будут требовать регистрации
                 .authorizeRequests()
-                .antMatchers("/lesson","/lesson/newUser").permitAll()
-                .anyRequest().authenticated()
+                .antMatchers("/lesson", "/lesson/newUser").permitAll()
+                .antMatchers("/lesson/admin/**").hasRole("ADMIN")
+                .anyRequest().hasAnyRole("USER", "ADMIN")
                 .and()
                 .formLogin().successHandler(successUserHandler)
                 .permitAll()
@@ -39,23 +45,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout().logoutUrl("/logout").logoutSuccessUrl("/lesson");
     }
 
-    // аутентификация inMemory
-//    @Bean
-//    @Override
-//    public UserDetailsService userDetailsService() {
-//        UserDetails user =
-//                User.withDefaultPasswordEncoder()
-//                        .username("user")
-//                        .password("user")
-//                        .roles("USER")
-//                        .build();
-//
-//        return new InMemoryUserDetailsManager(user);
-//    }
     @Bean
     public static PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     /*
     Проверяет по логину и паролю существует ли такой пользователь или нет
     для аутентификации имени пользователя и пароля.
@@ -68,4 +62,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         authProvider.setUserDetailsService(userService);
         return authProvider;
     }
+
 }

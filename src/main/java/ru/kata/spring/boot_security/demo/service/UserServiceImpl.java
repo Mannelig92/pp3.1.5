@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService, UserDetailsService { //Класс сервиса для работы с вэбом
 
     private UserRepository userRepository;
-//    private User user;
+    //    private User user;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -68,18 +68,20 @@ public class UserServiceImpl implements UserService, UserDetailsService { //Клас
         return userRepository.findAll();
     }
 
-    //    @Override
-//    @Transactional
-//    public void editUser(User user) {
-//        Optional<User> userEdit = userRepository.findByUserName(user.getUserName());
-//        userEdit.set
-//    }
+    @Override
+    @Transactional
+    public void editUser(User user) {
+        userRepository.save(user);
+    }
+
     @Override
     public User getUser(long id) { //Получение юзера по айди
-        Optional<User> userFromDB = userRepository.findById(id);
-        return userFromDB.orElse(new User());
+//        Optional<User> userFromDB = userRepository.findById(id);
+//        return userFromDB.orElse(new User());
+        return userRepository.findById(id).get();
     }
-    public Optional<User> findByUserName(String username){ //получение юзера по имени
+
+    public Optional<User> findByUserName(String username) { //получение юзера по имени
         return userRepository.findByUserName(username);
     }
 
@@ -95,9 +97,10 @@ public class UserServiceImpl implements UserService, UserDetailsService { //Клас
 //                user.get().getPassword(), mapRolesToAuthorities(user.get().getRoles()));
         return user.get();
     }
+
     //Метод из коллекции ролей получает коллекцию прав доступа
-    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles){
+    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
         return roles.stream().
-                map(x -> new SimpleGrantedAuthority(x.getName())).collect(Collectors.toList());
+                map(x -> new SimpleGrantedAuthority(x.getRole())).collect(Collectors.toList());
     }
 }

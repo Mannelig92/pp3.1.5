@@ -4,16 +4,16 @@ import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Table(name = "roles")
 public class Role implements GrantedAuthority {
     @Id
+    @Column(name = "role_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "name")
-    private String name;
+    @Column(name = "role")
+    private String role;
     @ManyToMany(mappedBy = "roles") //ссылаемся на коллекцию в юзерс
     private List<User> users;
 
@@ -24,9 +24,9 @@ public class Role implements GrantedAuthority {
         this.id = id;
     }
 
-    public Role(Long id, String name) {
+    public Role(Long id, String role) {
         this.id = id;
-        this.name = name;
+        this.role = role;
     }
 
     public List<User> getUsers() {
@@ -45,27 +45,27 @@ public class Role implements GrantedAuthority {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getRole() {
+        return role;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setRole(String role) {
+        this.role = role;
     }
 
     @Override
     public String getAuthority() {
-        return getName();
+        return getRole();
     }
 
-    @Override
-    public String toString() {
-        return "Role{" +
-                "users=" + users +
-                ", id=" + id +
-                ", name='" + name + '\'' +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Role{" +
+//                "id=" + id +
+//                ", role='" + role + '\'' +
+//                ", users=" + users +
+//                '}';
+//    }
 
     @Override
     public boolean equals(Object obj) {

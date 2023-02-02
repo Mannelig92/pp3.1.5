@@ -13,7 +13,7 @@ public interface UserService {
 
     List<User> getAllUsers(); //Вывод всех юзеров
 
-//    void editUser(User user);
+    void editUser(User user);
 
     User getUser(long id);
 }
