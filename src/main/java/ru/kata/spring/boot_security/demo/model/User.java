@@ -15,7 +15,6 @@ SecurityContextHolder.
 @Table(name = "users")
 public class User implements UserDetails {
     @Id
-    @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "first_name")
@@ -30,21 +29,19 @@ public class User implements UserDetails {
     private String email;
     @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER) //Понять всё и дописать
     @JoinTable(name = "Users_Roles",
-            joinColumns = @JoinColumn(name = "user_id"), //id в таблице юзерс
-            inverseJoinColumns = @JoinColumn(name = "role_id")) //id в таблице roles
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), //id в таблице юзерс
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")) //id в таблице roles
     private List<Role> roles;
-//    @ManyToMany(fetch = FetchType.EAGER)
-//    private Collection<Role> roles;
-
     public User() {
     }
 
-    public User(String userName, String lastName, int age, String password, String email) {
+    public User(String userName, String lastName, int age, String password, String email, List<Role> roles) {
         this.userName = userName;
         this.lastName = lastName;
         this.age = age;
         this.password = password;
         this.email = email;
+        this.roles = roles;
     }
 
     public List<Role> getRoles() {
@@ -90,7 +87,6 @@ public class User implements UserDetails {
     public String getPassword() {
         return password;
     }
-
 
     public void setPassword(String password) {
         this.password = password;

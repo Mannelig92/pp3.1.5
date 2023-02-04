@@ -14,30 +14,26 @@ public class AdminController {
     private UserService userService;
     private RoleServiceImpl roleServiceImpl;
 
-    //Подключаем Service через конструктор. Лучше через него, а не через поле или сэттэр
     @Autowired
     public AdminController(UserService userService, RoleServiceImpl roleServiceImpl) {
         this.userService = userService;
         this.roleServiceImpl = roleServiceImpl;
     }
-    /*
-    Mapping связывают методы контроллера с тем адресом к которым мы можем обратиться из браузера
-    Всего 5 видов Mapping в зависимость от того какой http-запрос должен прийти в этот метод контроллера
-    Model это логика работы с данными.
-     */
-    @GetMapping() //Отображение страницы url
-    public String showAllUsers(Model model) { //вывод всех юзеров
-        //кладём в model пару ключ,значение. В Thymeleaf используем значение по ключу
-        model.addAttribute("admin", userService.getAllUsers()); //allUsers имеет отношение в Thymeleaf
-        return "admin"; //отношение к html файлу по такому же названию
+
+    @GetMapping()
+    public String showAllUsers(Model model) {
+        model.addAttribute("admin", userService.getAllUsers());
+        model.addAttribute("roles",roleServiceImpl.findAll());
+        return "admin";
     }
+
     //получение юзера по id. вместо id можно будет поместить число и с помощью аннотации PathVariable
     //мы извлёчём этот id из url и получим к нему доступ
     //PathVariable предоставит этот id
     @GetMapping(value = "/{id}/edit")
     public String editUser(@PathVariable("id") long id, Model model) {
-        //Получаем текущего человека по его id
         model.addAttribute("user", userService.getUser(id));
+        model.addAttribute("roles", roleServiceImpl.findAll());
         return "edit";
     }
 
@@ -52,6 +48,7 @@ public class AdminController {
         userService.removeUserById(id);
         return "redirect:/lesson/admin";
     }
+
     @GetMapping(value = "/{id}/showUser")
     public String showUser(@PathVariable("id") long id, Model model) {
         model.addAttribute("user", userService.getUser(id));

@@ -14,6 +14,7 @@ import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -64,7 +65,6 @@ public class UserServiceImpl implements UserService, UserDetailsService { //Клас
 
     @Override
     public List<User> getAllUsers() {
-//        user = new User("Harry","Potter",27,"12345","@mail.ru");
         return userRepository.findAll();
     }
 
@@ -76,8 +76,6 @@ public class UserServiceImpl implements UserService, UserDetailsService { //Клас
 
     @Override
     public User getUser(long id) { //Получение юзера по айди
-//        Optional<User> userFromDB = userRepository.findById(id);
-//        return userFromDB.orElse(new User());
         return userRepository.findById(id).get();
     }
 

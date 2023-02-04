@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.service.RoleServiceImpl;
 import ru.kata.spring.boot_security.demo.service.UserServiceImpl;
 
 import java.security.Principal;
@@ -16,39 +16,33 @@ import java.security.Principal;
 @RequestMapping("/lesson")
 public class UserController {
     private UserServiceImpl userService;
+    private RoleServiceImpl roleService;
 
-    //Подключаем Service через конструктор. Лучше через него, а не через поле или сэттэр
     @Autowired
-    public UserController(UserServiceImpl userService) {
+    public UserController(UserServiceImpl userService, RoleServiceImpl roleService) {
         this.userService = userService;
+        this.roleService = roleService;
     }
 
-    /*
-    Далее для создания методов для сайта используем аннотации CRUD(Create,Read,Update,Delete)
-     - Get, Post, Put, Delete, Patch, и другие.
-    @GetMapping — Обрабатывает get-запросы.Ничего не меняет на сервере, не добавляет, не изменяет,
-     просто получает данные с сервера
-     */
     @GetMapping
     public String mainPage() {
         return "mainPage";
     }
 
     @GetMapping(value = "/newUser")
-    public String authentication(@ModelAttribute("user") User user) { //Добавление нового юзера
+    public String authentication(Model model) { //Добавление нового юзера
+        model.addAttribute("user", new User());
+        model.addAttribute("roles", roleService.findAll());
         return "newUser";
     }
 
-    /*
-    @PostMapping-Post-запрос изменяет что-то на сервере, например создаём новую учётную запись,
-     делаем пост, загружаем фото
-     */
     @PostMapping()
     public String save(@ModelAttribute("user") User user, Model model) {
-        model.addAttribute("role", new Role());
+        model.addAttribute("roles", roleService.findAll());
         userService.saveUser(user);
-        return "redirect:/lesson"; //После выполнения метода переходить по данному url
+        return "redirect:/lesson";
     }
+
     //Principal запоминает данные об авторизованном пользователе
     @GetMapping("/showUser")
     public String showUser(Principal principal, Model model) {
@@ -56,19 +50,5 @@ public class UserController {
         model.addAttribute("user", user);
         return "showUser";
     }
-
-
-//    @GetMapping("/registration")
-//    public String registration(){
-//        return "registration";
-//    }
-//    @PostMapping("/registration")
-//    public String addUser(User user){
-//        userService.findByUserName(user.getUserName());
-//        user.setRoles();
-//        userService.saveUser(user);
-//        return "redirect:/login";
-//    }
-
 
 }

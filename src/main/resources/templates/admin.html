@@ -15,6 +15,7 @@
             <th scope="col">Возраст</th>
             <th scope="col">Пароль</th>
             <th scope="col">Почта</th>
+            <th scope="col">Роль</th>
             <th scope="col">Изменить</th>
             <th scope="col">Посмотреть</th>
             <th scope="col">Удалить</th>
@@ -27,12 +28,23 @@
             <td th:text="${user.getAge()}">user</td>
             <td th:text="${user.getPassword()}">user</td>
             <td th:text="${user.getEmail()}">user</td>
-            <td> <button> <a th:href="@{/lesson/admin/{id}/edit(id=${user.getId()})}">Жмяк</a> </button> </td>
-            <td> <button> <a th:href="@{/lesson/admin/{id}/showUser(id=${user.getId()})}">Жмяк</a> </button> </td>
+            <td th:switch="${#lists.size(user.getRoles())}">
+                <span th:case="'1'"
+                      th:text="${user.getRoles().get(0).getRole()}"></span>
+                <span th:case="'2'"
+                      th:text="${user.getRoles().get(0).getRole() + ', ' + user.getRoles().get(1).getRole()}"></span>
+            </td>
             <td>
-                <form th:method="DELETE" th:action="@{/lesson//admin/{id}/delete(id=${user.getId()})}">
+                <button><a th:href="@{/lesson/admin/{id}/edit(id=${user.getId()})}">Жмяк</a></button>
+            </td>
+            <td>
+                <button><a th:href="@{/lesson/admin/{id}/showUser(id=${user.getId()})}">Жмяк</a></button>
+            </td>
+            <td>
+                <form th:method="DELETE" th:action="@{/lesson/admin/{id}/delete(id=${user.getId()})}">
                     <input type="submit" value="Delete"/>
                 </form>
+            </td>
             </td>
         </tr>
         </tbody>
