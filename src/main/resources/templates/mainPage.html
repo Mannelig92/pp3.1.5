@@ -8,11 +8,12 @@
 <h1>Главная страница</h1>
 <hr>
 <br>
-<div sec:authorize="hasRole('ROLE_ADMIN')">
+<div sec:authorize="isAnonymous()"><a href="/lesson/showUser"><h3>Войти в аккаунт</h3></a><br></div>
 
-<a href="/lesson/newUser"><h3>Регистрация пользователя</h3></a><br>
-<a href="/lesson/admin"><h3>Админка</h3></a><br>
-</div>
-<a href="/lesson/showUser"><h3>Информация о пользователе</h3></a><br>
+<div sec:authorize="isAnonymous()"><a href="/lesson/newUser"><h3>Регистрация пользователя</h3></a><br></div>
+
+<div sec:authorize="hasRole('ROLE_ADMIN')"><a href="/lesson/admin"><h3>Панель Администратора</h3></a><br></div>
+
+<div sec:authorize="isAuthenticated()"><a href="/lesson/showUser"><h3>Информация о пользователе</h3></a><br></div>
 </body>
 </html>
