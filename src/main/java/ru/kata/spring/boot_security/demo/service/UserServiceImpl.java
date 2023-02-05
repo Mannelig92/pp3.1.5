@@ -28,7 +28,6 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService, UserDetailsService { //Класс сервиса для работы с вэбом
 
     private UserRepository userRepository;
-    //    private User user;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -37,11 +36,6 @@ public class UserServiceImpl implements UserService, UserDetailsService { //Клас
         this.userRepository = userRepository;
     }
 
-    //    private PasswordEncoder passwordEncoder;
-//    @Autowired
-//    public UserServiceImpl(@Lazy PasswordEncoder passwordEncoder) {
-//        this.passwordEncoder = passwordEncoder;
-//    }
     @Override
     @Transactional
     public boolean saveUser(User user) {
@@ -49,7 +43,6 @@ public class UserServiceImpl implements UserService, UserDetailsService { //Клас
         if (userDB.isPresent()) {
             return false;
         }
-//        user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.saveAndFlush(user);
         return true;

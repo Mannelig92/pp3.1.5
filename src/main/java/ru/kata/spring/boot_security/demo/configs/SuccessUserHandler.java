@@ -12,6 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Set;
 
+/*
+1.Настроить смену пароля +
+2.Настроить сокрытие ссылок для ролей
+3.Настроить ввод данных для полей
+ */
 @Component
 public class SuccessUserHandler implements AuthenticationSuccessHandler {
     // Действие после успешной аутентификации
@@ -22,6 +27,8 @@ public class SuccessUserHandler implements AuthenticationSuccessHandler {
 
         if (roles.contains("ROLE_ADMIN")) {
             httpServletResponse.sendRedirect("/lesson/admin");
+        } else if (roles.contains("ROLE_USER")) {
+            httpServletResponse.sendRedirect("/lesson/showUser");
         } else {
             httpServletResponse.sendRedirect("/lesson");
         }

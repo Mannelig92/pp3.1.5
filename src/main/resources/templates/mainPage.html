@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Главная страница</title>
@@ -8,7 +8,11 @@
 <h1>Главная страница</h1>
 <hr>
 <br>
+<div sec:authorize="hasRole('ROLE_ADMIN')">
+
 <a href="/lesson/newUser"><h3>Регистрация пользователя</h3></a><br>
+<a href="/lesson/admin"><h3>Админка</h3></a><br>
+</div>
 <a href="/lesson/showUser"><h3>Информация о пользователе</h3></a><br>
 </body>
 </html>
