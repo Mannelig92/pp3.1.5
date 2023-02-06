@@ -1,14 +1,14 @@
 package ru.kata.spring.boot_security.demo.model;
 
 
-
-
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
 
@@ -31,8 +31,8 @@ public class User implements UserDetails {
     @NotEmpty(message = "Строка не должна быть пустой")
     @Column(name = "last_name")
     private String lastName;
-    @NotEmpty(message = "Строка не должна быть пустой")
-    @Size(min = 16, max = 110, message = "Возраст должен быть в пределах 16-110 лет")
+    @Min(value = 16,message = "Возраст не может быть меньше 16 лет")
+    @Max(value = 110,message = "Возраст не может быть больше 110 лет")
     @Column(name = "age")
     private int age;
     @NotEmpty(message = "Строка не должна быть пустой")

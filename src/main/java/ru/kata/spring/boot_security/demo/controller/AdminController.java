@@ -47,8 +47,8 @@ public class AdminController {
     @PatchMapping(value = "/{id}")
     public String update(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            System.out.println(bindingResult);
-            return "/lesson/admin/edit";
+//            System.out.println(bindingResult);
+            return "/edit";
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.editUser(user);

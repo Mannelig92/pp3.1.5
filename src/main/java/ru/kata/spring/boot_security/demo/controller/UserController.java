@@ -40,14 +40,15 @@ public class UserController {
     }
 
     @PostMapping()
-    public String save(@Validated @ModelAttribute("user") User user, BindingResult bindingResult, Model model) {
+    public String save(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            System.out.println(bindingResult);
-            return "/lesson/newUser";
+//            boolean roleCheck = false;
+//            model.addAttribute("roleCheck", roleCheck);
+            return "/newUser";
+        } else {
+            userService.saveUser(user);
+            return "redirect:/lesson";
         }
-//        model.addAttribute("roles", roleService.findAll());
-        userService.saveUser(user);
-        return "redirect:/lesson";
     }
 
     //Principal запоминает данные об авторизованном пользователе

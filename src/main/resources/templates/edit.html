@@ -28,12 +28,11 @@
     <input type="text" th:field="*{email}" id="email"/><br>
     <div style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</div>
     <p>
-        <label>Roles:
-            <input type="checkbox" id="roles" th:each="role: ${roles}"
-                   th:text="${role.role}"
-                   th:value="${role.id}"
-                   th:field="*{roles}"/>
-        </label>
+    <h3>Roles:</h3>
+    <input type="checkbox" id="roles" th:each="role: ${roles}"
+           th:text="${role.role}"
+           th:value="${role.id}"
+           th:field="*{roles}"/>
     </p>
     <input type="submit" value="Update!"/>
 
