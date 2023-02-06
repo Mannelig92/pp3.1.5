@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.RoleServiceImpl;
@@ -39,7 +40,7 @@ public class UserController {
     }
 
     @PostMapping()
-    public String save(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, Model model) {
+    public String save(@Validated @ModelAttribute("user") User user, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             System.out.println(bindingResult);
             return "/lesson/newUser";
