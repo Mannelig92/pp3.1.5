@@ -6,8 +6,4 @@ import java.util.List;
 
 public interface RoleService {
     public List<Role> findAll();
-
-//    public void addRole(Role role);
-//
-//    public Role getRoleById(Long id);
 }

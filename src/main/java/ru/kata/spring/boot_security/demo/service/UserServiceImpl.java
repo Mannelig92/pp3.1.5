@@ -14,26 +14,26 @@ import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 /*
-этот класс представляет собой сервис – компонент сервис-слоя.
-Сервис является подтипом класса @Component.
-Использование данной аннотации позволит искать бины-сервисы автоматически.
+СЌС‚РѕС‚ РєР»Р°СЃСЃ РїСЂРµРґСЃС‚Р°РІР»СЏРµС‚ СЃРѕР±РѕР№ СЃРµСЂРІРёСЃ вЂ“ РєРѕРјРїРѕРЅРµРЅС‚ СЃРµСЂРІРёСЃ-СЃР»РѕСЏ.
+РЎРµСЂРІРёСЃ СЏРІР»СЏРµС‚СЃСЏ РїРѕРґС‚РёРїРѕРј РєР»Р°СЃСЃР° @Component.
+РСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ РґР°РЅРЅРѕР№ Р°РЅРЅРѕС‚Р°С†РёРё РїРѕР·РІРѕР»РёС‚ РёСЃРєР°С‚СЊ Р±РёРЅС‹-СЃРµСЂРІРёСЃС‹ Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё.
  */
-@Service //Сервис является соединительным звеном между Контроллером и Дао
-public class UserServiceImpl implements UserService, UserDetailsService { //Класс сервиса для работы с вэбом
+@Service //РЎРµСЂРІРёСЃ СЏРІР»СЏРµС‚СЃСЏ СЃРѕРµРґРёРЅРёС‚РµР»СЊРЅС‹Рј Р·РІРµРЅРѕРј РјРµР¶РґСѓ РљРѕРЅС‚СЂРѕР»Р»РµСЂРѕРј Рё Р”Р°Рѕ
+public class UserServiceImpl implements UserService, UserDetailsService { //РљР»Р°СЃСЃ СЃРµСЂРІРёСЃР° РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РІСЌР±РѕРј
 
     private UserRepository userRepository;
-    @Autowired
+
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -68,17 +68,17 @@ public class UserServiceImpl implements UserService, UserDetailsService { //Клас
     }
 
     @Override
-    public User getUser(long id) { //Получение юзера по айди
+    public User getUser(long id) { //РџРѕР»СѓС‡РµРЅРёРµ СЋР·РµСЂР° РїРѕ Р°Р№РґРё
         return userRepository.findById(id).get();
     }
 
-    public Optional<User> findByUserName(String username) { //получение юзера по имени
+    public Optional<User> findByUserName(String username) { //РїРѕР»СѓС‡РµРЅРёРµ СЋР·РµСЂР° РїРѕ РёРјРµРЅРё
         return userRepository.findByUserName(username);
     }
 
     @Override
     @Transactional
-    //Загружает пользователя по имени пользователя
+    //Р—Р°РіСЂСѓР¶Р°РµС‚ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РїРѕ РёРјРµРЅРё РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> user = findByUserName(username);
         if (user.isEmpty()) {
@@ -89,7 +89,7 @@ public class UserServiceImpl implements UserService, UserDetailsService { //Клас
         return user.get();
     }
 
-    //Метод из коллекции ролей получает коллекцию прав доступа
+    //РњРµС‚РѕРґ РёР· РєРѕР»Р»РµРєС†РёРё СЂРѕР»РµР№ РїРѕР»СѓС‡Р°РµС‚ РєРѕР»Р»РµРєС†РёСЋ РїСЂР°РІ РґРѕСЃС‚СѓРїР°
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
         return roles.stream().
                 map(x -> new SimpleGrantedAuthority(x.getRole())).collect(Collectors.toList());

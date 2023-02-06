@@ -4,10 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.RoleServiceImpl;
 import ru.kata.spring.boot_security.demo.service.UserService;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/lesson/admin")
@@ -42,9 +45,11 @@ public class AdminController {
     }
 
     @PatchMapping(value = "/{id}")
-    public String update(@PathVariable("id") long id, @ModelAttribute("user") User user) {
-//        model.addAttribute("roles", roleServiceImpl.findAll());
-//        user.setPassword(userService.getUser(id).getPassword());
+    public String update(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            System.out.println(bindingResult);
+            return "/lesson/admin/edit";
+        }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.editUser(user);
         return "redirect:/lesson/admin";

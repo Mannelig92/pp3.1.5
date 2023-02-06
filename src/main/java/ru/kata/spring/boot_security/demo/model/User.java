@@ -1,9 +1,13 @@
 package ru.kata.spring.boot_security.demo.model;
 
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.List;
 
@@ -17,14 +21,21 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotEmpty(message = "Строка не должна быть пустой")
     @Column(name = "first_name")
     private String userName;
+    @NotEmpty(message = "Строка не должна быть пустой")
     @Column(name = "last_name")
     private String lastName;
+    @NotEmpty(message = "Строка не должна быть пустой")
+    @Size(min = 16, max = 110, message = "Возраст должен быть в пределах 16-110 лет")
     @Column(name = "age")
     private int age;
+    @NotEmpty(message = "Строка не должна быть пустой")
     @Column(name = "password")
     private String password;
+    @NotEmpty(message = "Строка не должна быть пустой")
+    @Email(message = "Почта должна иметь правильный вид")
     @Column(name = "email")
     private String email;
     @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER) //Понять всё и дописать
@@ -32,6 +43,7 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), //id в таблице юзерс
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")) //id в таблице roles
     private List<Role> roles;
+
     public User() {
     }
 

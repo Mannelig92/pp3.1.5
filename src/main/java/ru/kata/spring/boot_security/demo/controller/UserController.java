@@ -3,16 +3,18 @@ package ru.kata.spring.boot_security.demo.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.RoleServiceImpl;
 import ru.kata.spring.boot_security.demo.service.UserServiceImpl;
 
+import javax.validation.Valid;
 import java.security.Principal;
 
-//Помечаем что это класс контроллера для работы с thymeleaf
+//РџРѕРјРµС‡Р°РµРј С‡С‚Рѕ СЌС‚Рѕ РєР»Р°СЃСЃ РєРѕРЅС‚СЂРѕР»Р»РµСЂР° РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ thymeleaf
 @Controller
-//@RequestMapping помечает общий URL-адрес для каждого метода, например /lesson/allUsers
+//@RequestMapping РїРѕРјРµС‡Р°РµС‚ РѕР±С‰РёР№ URL-Р°РґСЂРµСЃ РґР»СЏ РєР°Р¶РґРѕРіРѕ РјРµС‚РѕРґР°, РЅР°РїСЂРёРјРµСЂ /lesson/allUsers
 @RequestMapping("/lesson")
 public class UserController {
     private UserServiceImpl userService;
@@ -30,20 +32,24 @@ public class UserController {
     }
 
     @GetMapping(value = "/newUser")
-    public String authentication(Model model) { //Добавление нового юзера
+    public String authentication(Model model) { //Р”РѕР±Р°РІР»РµРЅРёРµ РЅРѕРІРѕРіРѕ СЋР·РµСЂР°
         model.addAttribute("user", new User());
         model.addAttribute("roles", roleService.findAll());
         return "newUser";
     }
 
     @PostMapping()
-    public String save(@ModelAttribute("user") User user, Model model) {
-        model.addAttribute("roles", roleService.findAll());
+    public String save(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            System.out.println(bindingResult);
+            return "/lesson/newUser";
+        }
+//        model.addAttribute("roles", roleService.findAll());
         userService.saveUser(user);
         return "redirect:/lesson";
     }
 
-    //Principal запоминает данные об авторизованном пользователе
+    //Principal Р·Р°РїРѕРјРёРЅР°РµС‚ РґР°РЅРЅС‹Рµ РѕР± Р°РІС‚РѕСЂРёР·РѕРІР°РЅРЅРѕРј РїРѕР»СЊР·РѕРІР°С‚РµР»Рµ
     @GetMapping("/showUser")
     public String showUser(Principal principal, Model model) {
         User user = userService.findByUserName(principal.getName()).get();

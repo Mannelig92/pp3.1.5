@@ -7,11 +7,11 @@ import ru.kata.spring.boot_security.demo.model.User;
 import java.util.List;
 
 public interface UserService {
-    boolean saveUser(User user); //Добавление юзера
+    boolean saveUser(User user); //Р”РѕР±Р°РІР»РµРЅРёРµ СЋР·РµСЂР°
 
-    void removeUserById(long id); //Удаление юзеров
+    void removeUserById(long id); //РЈРґР°Р»РµРЅРёРµ СЋР·РµСЂРѕРІ
 
-    List<User> getAllUsers(); //Вывод всех юзеров
+    List<User> getAllUsers(); //Р’С‹РІРѕРґ РІСЃРµС… СЋР·РµСЂРѕРІ
 
     void editUser(User user);
 
