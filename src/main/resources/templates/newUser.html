@@ -28,16 +28,11 @@
     <input type="text" th:field="*{email}" id="email"/>
     <div style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</div>
     <br>
-
     <h3>Выберите роль:</h3>
     <input type="checkbox" id="roles" th:each="role: ${roles}"
            th:text="${role.role}"
            th:value="${role.id}"
-           th:field="*{roles}"
-<!--           name="roleCheck"-->
-<!--           th:checked="${roleCheck}"/>-->
-    <!--    <div style="color:red" th:if="${#fields.hasErrors('roles')}" th:errors="*{role}">Role Error</div><br>-->
-
+           th:field="*{roles}"/>
     <p><input type="submit" value="Create!"/></p>
 </form>
 <br>

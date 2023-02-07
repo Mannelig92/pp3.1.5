@@ -59,15 +59,6 @@ public class Role implements GrantedAuthority {
         return getRole();
     }
 
-//    @Override
-//    public String toString() {
-//        return "Role{" +
-//                "id=" + id +
-//                ", role='" + role + '\'' +
-//                ", users=" + users +
-//                '}';
-//    }
-
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
