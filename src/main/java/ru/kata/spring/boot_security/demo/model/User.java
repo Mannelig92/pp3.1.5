@@ -1,6 +1,7 @@
 package ru.kata.spring.boot_security.demo.model;
 
-
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.core.GrantedAuthority;
@@ -9,9 +10,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.Size;
-
-
 import java.util.Collection;
 import java.util.List;
 
@@ -33,25 +31,20 @@ public class User implements UserDetails {
     private String lastName;
     @Min(value = 16,message = "Возраст не может быть меньше 16 лет")
     @Max(value = 110,message = "Возраст не может быть больше 110 лет")
-    @Column(name = "age")
     private int age;
     @NotEmpty(message = "Строка не должна быть пустой")
-    @Column(name = "password")
     private String password;
     @NotEmpty(message = "Строка не должна быть пустой")
     @Email(message = "Почта должна иметь правильный вид")
-    @Column(name = "email")
     private String email;
-    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER) //Понять всё и дописать
-    @JoinTable(name = "Users_Roles",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), //id в таблице юзерс
-            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")) //id в таблице roles
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @Fetch(FetchMode.JOIN) //используется для ленивой загрузки
     private List<Role> roles;
 
     public User() {
     }
 
-    public User(String userName, String lastName, int age, String password, String email, List<Role> roles) {
+    public User(String userName, String lastName, int age, String password, String email,List<Role> roles) {
         this.userName = userName;
         this.lastName = lastName;
         this.age = age;

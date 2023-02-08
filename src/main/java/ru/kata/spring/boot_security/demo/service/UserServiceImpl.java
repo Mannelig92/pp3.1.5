@@ -27,7 +27,6 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService, UserDetailsService { //Класс сервиса для работы с вэбом
 
     private UserRepository userRepository;
-
     private PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -44,7 +43,7 @@ public class UserServiceImpl implements UserService, UserDetailsService { //Кл
             return false;
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.saveAndFlush(user);
+        userRepository.save(user);
         return true;
     }
 
@@ -64,6 +63,7 @@ public class UserServiceImpl implements UserService, UserDetailsService { //Кл
     @Override
     @Transactional
     public void editUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 
@@ -84,14 +84,7 @@ public class UserServiceImpl implements UserService, UserDetailsService { //Кл
         if (user.isEmpty()) {
             throw new UsernameNotFoundException(String.format("User '%s' not found", username));
         }
-//        return new org.springframework.security.core.userdetails.User(user.get().getUserName(),
-//                user.get().getPassword(), mapRolesToAuthorities(user.get().getRoles()));
         return user.get();
     }
 
-    //Метод из коллекции ролей получает коллекцию прав доступа
-    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
-        return roles.stream().
-                map(x -> new SimpleGrantedAuthority(x.getRole())).collect(Collectors.toList());
-    }
 }
