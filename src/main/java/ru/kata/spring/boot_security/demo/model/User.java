@@ -2,7 +2,6 @@ package ru.kata.spring.boot_security.demo.model;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,19 +22,12 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotEmpty(message = "Строка не должна быть пустой")
     @Column(name = "first_name")
     private String userName;
-    @NotEmpty(message = "Строка не должна быть пустой")
     @Column(name = "last_name")
     private String lastName;
-    @Min(value = 16,message = "Возраст не может быть меньше 16 лет")
-    @Max(value = 110,message = "Возраст не может быть больше 110 лет")
     private int age;
-    @NotEmpty(message = "Строка не должна быть пустой")
     private String password;
-    @NotEmpty(message = "Строка не должна быть пустой")
-    @Email(message = "Почта должна иметь правильный вид")
     private String email;
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @Fetch(FetchMode.JOIN) //используется для ленивой загрузки
@@ -44,7 +36,7 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(String userName, String lastName, int age, String password, String email,List<Role> roles) {
+    public User(String userName, String lastName, int age, String password, String email, List<Role> roles) {
         this.userName = userName;
         this.lastName = lastName;
         this.age = age;

@@ -36,6 +36,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/lesson", "/lesson/newUser").permitAll()
                 .antMatchers("/lesson/admin/**").hasRole("ADMIN")
+//                .antMatchers("/resources/**", "/static/**", "/css/**","styles.css").permitAll()
                 .anyRequest().hasAnyRole("USER", "ADMIN")
                 .and()
                 .formLogin().successHandler(successUserHandler)
@@ -43,6 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 //логаут по вызову первой ссылки, вторая это перенаправление после логаута
                 .logout().logoutUrl("/logout").logoutSuccessUrl("/lesson");
+
     }
 
     @Bean
@@ -62,5 +64,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         authProvider.setUserDetailsService(userService);
         return authProvider;
     }
-
 }

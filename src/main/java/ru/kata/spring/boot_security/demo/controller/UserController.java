@@ -31,22 +31,22 @@ public class UserController {
         return "mainPage";
     }
 
-    @GetMapping(value = "/newUser")
-    public String authentication(Model model) { //Добавление нового юзера
-        model.addAttribute("user", new User());
-        model.addAttribute("roles", roleService.findAll());
-        return "newUser";
-    }
+//    @GetMapping(value = "/newUser")
+//    public String authentication(Model model) { //Добавление нового юзера
+//        model.addAttribute("user", new User());
+//        model.addAttribute("roles", roleService.findAll());
+//        return "newUser";
+//    }
 
-    @PostMapping()
-    public String save(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "/newUser";
-        } else {
-            userService.saveUser(user);
-            return "redirect:/lesson";
-        }
-    }
+//    @PostMapping()
+//    public String save(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
+//        if (bindingResult.hasErrors()) {
+//            return "/newUser";
+//        } else {
+//            userService.saveUser(user);
+//            return "redirect:/lesson";
+//        }
+//    }
 
     //Principal запоминает данные об авторизованном пользователе
     @GetMapping("/showUser")

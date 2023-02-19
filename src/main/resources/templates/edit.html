@@ -1,8 +1,19 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Изменение пользователя</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+    integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
+            crossorigin="anonymous"></script>
 </head>
 <body>
 <h1>Изменение пользователя</h1>
@@ -10,23 +21,19 @@
 
     <label for="name">Enter name: </label>
     <input type="text" th:field="*{userName}" id="name"/><br>
-    <div style="color:red" th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}">Name Error</div>
 
     <label for="lastName">Enter lastname: </label>
     <input type="text" th:field="*{lastName}" id="lastName"/><br>
-    <div style="color:red" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">LastName Error</div>
 
     <label for="age">Enter age: </label>
     <input type="text" th:field="*{age}" id="age"/><br>
-    <div style="color:red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Age Error</div>
 
     <label for="password">Enter password: </label>
     <input type="text" th:field="*{password}" id="password"/><br>
-    <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</div>
 
     <label for="email">Enter email: </label>
     <input type="text" th:field="*{email}" id="email"/><br>
-    <div style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</div>
+
     <br>
     <h3>Roles:</h3>
     <input type="checkbox" id="roles" th:each="role: ${roles}"
