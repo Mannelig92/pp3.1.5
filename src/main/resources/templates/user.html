@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
@@ -13,17 +12,22 @@
 <div class="container-fluid" id="top-container">
     <div class="row d-xl-flex flex-column" id="top-row">
         <div class="col-xl-12" id="top-column-1">
-            <p class="d-flex justify-content-xl-start" id="top-par">user@mail.ru with roles: ADMIN USER</p>
+            <h6 class="d-flex justify-content-xl-start" id="top-par"
+                th:text="${user.getEmail()} + ' with roles: ' + ${#strings.arrayJoin(user.roles, ', ')}">ADMIN, USER>
+            </h6>
         </div>
         <div class="col d-lg-flex d-xl-flex align-self-end justify-content-lg-center" id="top-column-2">
-            <a class="d-flex justify-content-lg-center align-items-lg-center" id="top-link" href="#">Logout</a>
+            <form class="d-flex justify-content-lg-center align-items-lg-center text-decoration-none" id="top-link"
+                  th:method="POST" th:action="@{/logout}">
+                <input type="submit" value="Logout" id="logoutButton"/>
+            </form>
         </div>
     </div>
 </div>
 <div class="container d-flex d-xl-flex flex-column justify-content-xl-start" id="panel">
     <div class="row d-flex d-xl-flex flex-column" id="pan-r">
         <div class="col d-flex justify-content-xl-start align-items-xl-center" id="pan-col">
-            <a id="pan-l" href="#">User</a></div>
+            <p id="pan-l">User</p></div>
     </div>
 </div>
 <p id="us-p">User information-page</p>
@@ -45,13 +49,13 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>3</td>
-                            <td>Cell 2</td>
-                            <td>Cell 2</td>
-                            <td>Cell 2</td>
-                            <td>Cell 2</td>
-                            <td>Cell 2</td>
+                        <tr th:each="user: ${user}">
+                            <td th:text="${user.getId()}">User</td>
+                            <td th:text="${user.getUserName()}">First Name</td>
+                            <td th:text="${user.getLastName()}">Last Name</td>
+                            <td th:text="${user.getAge()}">Age</td>
+                            <td th:text="${user.getEmail()}">Email</td>
+                            <td th:text="${#strings.arrayJoin(user.roles, ', ')}">Role</td>
                         </tr>
                         <tr></tr>
                         </tbody>
@@ -61,8 +65,5 @@
         </div>
     </div>
 </div>
-<script src="assets/js/jquery.min.js"></script>
-<script src="assets/bootstrap/js/bootstrap.min.js"></script>
 </body>
-
 </html>

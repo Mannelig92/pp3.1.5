@@ -11,7 +11,7 @@ import ru.kata.spring.boot_security.demo.service.UserServiceImpl;
 import java.security.Principal;
 
 @Controller
-@RequestMapping("/lesson/admin")
+@RequestMapping("/admin")
 public class AdminController {
     private UserServiceImpl userService;
     private RoleServiceImpl roleService;
@@ -33,18 +33,18 @@ public class AdminController {
     @PostMapping()
     public String save(@ModelAttribute("user") User user) {
             userService.saveUser(user);
-            return "redirect:/lesson/admin";
+            return "redirect:/admin";
     }
 
     @PatchMapping(value = "/{id}")
     public String update(@ModelAttribute("user") User user) {
         userService.editUser(user);
-        return "redirect:/lesson/admin";
+        return "redirect:/admin";
     }
 
     @DeleteMapping(value = "/{id}")
     public String delete(@PathVariable("id") long id) {
         userService.removeUserById(id);
-        return "redirect:/lesson/admin";
+        return "redirect:/admin";
     }
 }

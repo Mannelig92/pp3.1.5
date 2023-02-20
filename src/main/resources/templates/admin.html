@@ -26,12 +26,13 @@
     <div class="row d-xl-flex flex-column" id="top-row">
         <div class="col-xl-12" id="top-column-1">
             <h6 class="d-flex justify-content-xl-start" id="top-par"
-            th:text="${thisUser.getEmail()} + ' with roles: ' + ${#strings.arrayJoin(thisUser.roles, ', ')}">ADMIN, USER>
+                th:text="${thisUser.getEmail()} + ' with roles: ' + ${#strings.arrayJoin(thisUser.roles, ', ')}">ADMIN,
+                USER>
             </h6>
         </div>
         <div class="col d-lg-flex d-xl-flex align-self-end justify-content-lg-center" id="top-column-2">
             <form class="d-flex justify-content-lg-center align-items-lg-center text-decoration-none" id="top-link"
-               th:method="POST" th:action="@{/logout}">
+                  th:method="POST" th:action="@{/logout}">
                 <input type="submit" value="Logout" id="logoutButton"/>
             </form>
         </div>
@@ -44,7 +45,7 @@
             <a id="panel-link" href="#">Admin</a>
         </div>
         <div class="col d-flex justify-content-xl-start align-items-xl-center" id="panel-column-2">
-            <a id="panel-link-2" href="user.html">User</a>
+            <a id="panel-link-2" href="/user">User</a>
         </div>
     </div>
 </div>
@@ -100,13 +101,14 @@
                         <td>
                             <button class="btn btn-primary" id="table-cell-edit-button-2" type="button"
                                     data-toggle="modal"
-                                    th:data-target="${'#modalDelete' + user.getId()}">Delete</button>
+                                    th:data-target="${'#modalDelete' + user.getId()}">Delete
+                            </button>
                         </td>
                         <!--Модальное окно по изменению пользователя!!!!!!!!!!!!!!!!!!-->
                         <div class="modal fade" role="dialog" tabindex="-1" th:id="${'modalEdit'+ user.id}">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
-                                    <form th:method="PATCH" th:action="@{/lesson/admin/{id}(id=${user.id})}"
+                                    <form th:method="PATCH" th:action="@{/admin/{id}(id=${user.id})}"
                                           th:object="${user}">
                                         <div class="modal-header d-md-flex" id="modalHeader1">
                                             <h4 class="modal-title d-md-flex">Edit user</h4>
@@ -122,7 +124,8 @@
                                                         <label for="modal1-textInput"
                                                                class="justify-content-lg-center justify-content-xl-center"
                                                                id="modal1-fieldLabel">ID</label>
-                                                        <input th:name="id" class="justify-content-lg-center align-items-lg-center"
+                                                        <input th:name="id"
+                                                               class="justify-content-lg-center align-items-lg-center"
                                                                th:type="text"
                                                                id="modal1-textInput" disabled="" th:value="${user.id}">
                                                     </div>
@@ -131,63 +134,66 @@
                                                         <label for="modal1-textInput-2"
                                                                class="justify-content-lg-center justify-content-xl-center"
                                                                id="modal1-fieldLabel2">First name</label>
-                                                        <input th:name="userName" class="justify-content-lg-center align-items-lg-center"
+                                                        <input th:name="userName"
+                                                               class="justify-content-lg-center align-items-lg-center"
                                                                th:type="text"
                                                                id="modal1-textInput-2" th:value="${user.userName}">
                                                     </div>
-                                                        <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
-                                                             id="modal1-column2">
-                                                            <label for="modal1-textInput-3"
-                                                                   class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
-                                                                   id="modal1-fieldLabel3">Last name</label>
-                                                            <input th:name="lastName" th:type="text" id="modal1-textInput-3"
-                                                                   th:value="${user.lastName}">
-                                                        </div>
-                                                        <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
-                                                             id="modal1-column3">
-                                                            <label for="modal1-numInp"
-                                                                   class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
-                                                                   id="modal1-fieldLabel4">Age</label>
-                                                            <input th:name="age" th:type="number" id="modal1-numInp"
-                                                                   th:value="${user.age}">
-                                                        </div>
-                                                        <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
-                                                             id="modal1-column4">
-                                                            <label for="modal1-email"
-                                                                   class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
-                                                                   id="modal1-fieldLabel-5">Email</label>
-                                                            <input th:name="email" th:type="email" id="modal1-email"
-                                                                   th:value="${user.email}">
-                                                        </div>
-                                                        <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
-                                                             id="modal1-column5">
-                                                            <label for="modal1-password"
-                                                                   class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
-                                                                   id="modal1-fieldLabel6">Password</label>
-                                                            <input th:name="password" th:type="password" id="modal1-password"
-                                                                   th:value="${user.password}">
-                                                        </div>
-                                                        <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
-                                                             id="modal1-column6">
-                                                            <label for="modal1-select" class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
-                                                                   id="modal1-fieldLabel7">Role</label>
-                                                            <select th:name="roles" class="justify-content-lg-center align-items-lg-center"
-                                                                    id="modal1-select"
-                                                                    multiple="">
-                                                                <option th:each="role: ${roles}" th:value="${role.id}">
-                                                                    <th:block th:text="${role.toString()}">
-                                                                    </th:block>
-                                                                </option>
-                                                            </select>
-                                                        </div>
+                                                    <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
+                                                         id="modal1-column2">
+                                                        <label for="modal1-textInput-3"
+                                                               class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
+                                                               id="modal1-fieldLabel3">Last name</label>
+                                                        <input th:name="lastName" th:type="text" id="modal1-textInput-3"
+                                                               th:value="${user.lastName}">
+                                                    </div>
+                                                    <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
+                                                         id="modal1-column3">
+                                                        <label for="modal1-numInp"
+                                                               class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
+                                                               id="modal1-fieldLabel4">Age</label>
+                                                        <input th:name="age" th:type="number" id="modal1-numInp"
+                                                               th:value="${user.age}">
+                                                    </div>
+                                                    <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
+                                                         id="modal1-column4">
+                                                        <label for="modal1-email"
+                                                               class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
+                                                               id="modal1-fieldLabel-5">Email</label>
+                                                        <input th:name="email" th:type="email" id="modal1-email"
+                                                               th:value="${user.email}">
+                                                    </div>
+                                                    <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
+                                                         id="modal1-column5">
+                                                        <label for="modal1-password"
+                                                               class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
+                                                               id="modal1-fieldLabel6">Password</label>
+                                                        <input name="password" type="password" id="modal1-password"
+                                                               value="">
+                                                    </div>
+                                                    <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
+                                                         id="modal1-column6">
+                                                        <label for="modal1-select"
+                                                               class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
+                                                               id="modal1-fieldLabel7">Role</label>
+                                                        <select th:name="roles"
+                                                                class="justify-content-lg-center align-items-lg-center"
+                                                                id="modal1-select"
+                                                                multiple="">
+                                                            <option th:each="role: ${roles}" th:value="${role.id}">
+                                                                <th:block th:text="${role.toString()}">
+                                                                </th:block>
+                                                            </option>
+                                                        </select>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="modal-footer" id="modalFooter1">
-                                                <button class="btn btn-secondary" type="button" data-dismiss="modal">Close
-                                                </button>
-                                                <button class="btn btn-primary" type="submit">Edit</button>
-                                            </div>
+                                        </div>
+                                        <div class="modal-footer" id="modalFooter1">
+                                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Close
+                                            </button>
+                                            <button class="btn btn-primary" type="submit">Edit</button>
+                                        </div>
                                     </form>
                                 </div>
                             </div>
@@ -207,7 +213,8 @@
                                                  id="modal-2-row">
                                                 <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
                                                      id="modal2-column">
-                                                    <label for="modal2-textInp" class="justify-content-lg-center justify-content-xl-center"
+                                                    <label for="modal2-textInp"
+                                                           class="justify-content-lg-center justify-content-xl-center"
                                                            id="modal2-fieldLabel">ID</label>
                                                     <input class="justify-content-lg-center align-items-lg-center"
                                                            th:type="text"
@@ -216,7 +223,8 @@
                                                 </div>
                                                 <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
                                                      id="modal2-column2">
-                                                    <label for="modal2-textInp2" class="justify-content-lg-center justify-content-xl-center"
+                                                    <label for="modal2-textInp2"
+                                                           class="justify-content-lg-center justify-content-xl-center"
                                                            id="modal2-fieldLabel2">First name</label>
                                                     <input class="justify-content-lg-center align-items-lg-center"
                                                            th:type="text"
@@ -225,25 +233,32 @@
                                                 </div>
                                                 <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
                                                      id="modal2-column3">
-                                                    <label for="modal2-textInp3" class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
+                                                    <label for="modal2-textInp3"
+                                                           class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
                                                            id="modal2-fieldLabel3">Last name</label>
-                                                    <input th:type="text" id="modal2-textInp3" disabled="" th:value="${user.lastName}">
+                                                    <input th:type="text" id="modal2-textInp3" disabled=""
+                                                           th:value="${user.lastName}">
                                                 </div>
                                                 <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
                                                      id="modal2-column4">
-                                                    <label for="modal2-numInp" class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
+                                                    <label for="modal2-numInp"
+                                                           class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
                                                            id="modal2-fieldLabel4">Age</label>
-                                                    <input th:type="number" id="modal2-numInp" disabled="" th:value="${user.age}">
+                                                    <input th:type="number" id="modal2-numInp" disabled=""
+                                                           th:value="${user.age}">
                                                 </div>
                                                 <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
                                                      id="modal2-column5">
-                                                    <label for="modal2-email" class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
+                                                    <label for="modal2-email"
+                                                           class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
                                                            id="modal2-fieldLabel5">Email</label>
-                                                    <input th:type="email" id="modal2-email" disabled="" th:value="${user.email}">
+                                                    <input th:type="email" id="modal2-email" disabled=""
+                                                           th:value="${user.email}">
                                                 </div>
                                                 <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
                                                      id="modal2-column6">
-                                                    <label for="modal2-select" class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
+                                                    <label for="modal2-select"
+                                                           class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
                                                            id="modal2-fieldLabel6">Role</label>
                                                     <select class="justify-content-lg-center align-items-lg-center"
                                                             id="modal2-select"
@@ -260,9 +275,10 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
-                                        <form th:method="DELETE" th:action="@{/lesson/admin/{id}(id=${user.id})}">
-                                        <button class="btn btn-danger" type="submit">Delete</button>
+                                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Close
+                                        </button>
+                                        <form th:method="DELETE" th:action="@{/admin/{id}(id=${user.id})}">
+                                            <button class="btn btn-danger" type="submit">Delete</button>
                                         </form>
                                     </div>
                                 </div>
@@ -284,7 +300,7 @@
                 </div>
                 <div class="row d-flex flex-column align-items-lg-center justify-content-xl-center align-items-xl-center"
                      id="t-p-r2">
-                    <form th:method="POST" th:action="@{/lesson/admin}" th:object="${user}">
+                    <form th:method="POST" th:action="@{/admin}" th:object="${user}">
                         <div class="col d-flex flex-column align-items-lg-center align-items-xl-center" id="tp2-col1">
                             <label for="tp2-ti" class="justify-content-lg-center justify-content-xl-center"
                                    id="tp2-fl">First name</label>
@@ -338,9 +354,6 @@
             </div>
         </div>
     </div>
-    <!--<script src="assets/js/jquery.min.js"></script>-->
-    <!--<script src="assets/bootstrap/js/bootstrap.min.js"></script>-->
 </div>
 </body>
-
 </html>
