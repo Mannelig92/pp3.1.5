@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -34,17 +35,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
         http
                 .authorizeRequests()
-                .antMatchers("/lesson", "/lesson/newUser").permitAll()
                 .antMatchers("/lesson/admin/**").hasRole("ADMIN")
-//                .antMatchers("/resources/**", "/static/**", "/css/**","styles.css").permitAll()
-                .anyRequest().hasAnyRole("USER", "ADMIN")
+                .antMatchers().hasAnyRole("USER", "ADMIN")
+                .antMatchers("/", "/login").permitAll()
                 .and()
-                .formLogin().successHandler(successUserHandler)
+                .formLogin().loginPage("/login")
+                .successHandler(successUserHandler)
+                .loginProcessingUrl("/login")
                 .permitAll()
                 .and()
                 //логаут по вызову первой ссылки, вторая это перенаправление после логаута
-                .logout().logoutUrl("/logout").logoutSuccessUrl("/lesson");
-
+                .logout().logoutUrl("/logout").logoutSuccessUrl("/login");
     }
 
     @Bean
@@ -56,6 +57,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     Проверяет по логину и паролю существует ли такой пользователь или нет
     для аутентификации имени пользователя и пароля.
      */
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
+    }
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();

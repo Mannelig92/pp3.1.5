@@ -35,16 +35,6 @@ public class AdminController {
             userService.saveUser(user);
             return "redirect:/lesson/admin";
     }
-    //получение юзера по id. вместо id можно будет поместить число и с помощью аннотации PathVariable
-    //мы извлёчём этот id из url и получим к нему доступ
-    //PathVariable предоставит этот id
-
-//    @GetMapping(value = "/{id}/edit")
-//    public String editUser(@PathVariable("id") long id, Model model) {
-//        model.addAttribute("user", userService.getUser(id));
-//        model.addAttribute("roles", roleServiceImpl.findAll());
-//        return "edit";
-//    }
 
     @PatchMapping(value = "/{id}")
     public String update(@ModelAttribute("user") User user) {
@@ -57,10 +47,4 @@ public class AdminController {
         userService.removeUserById(id);
         return "redirect:/lesson/admin";
     }
-
-//    @GetMapping(value = "/{id}/showUser")
-//    public String showUser(@PathVariable("id") long id, Model model) {
-//        model.addAttribute("user", userService.getUser(id));
-//        return "showUser";
-//    }
 }
