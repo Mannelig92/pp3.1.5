@@ -1,17 +1,18 @@
 package ru.kata.spring.boot_security.demo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.repositories.RoleRepository;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /*
 этот класс представляет собой сервис – компонент сервис-слоя.
@@ -19,15 +20,18 @@ import java.util.Optional;
 Использование данной аннотации позволит искать бины-сервисы автоматически.
  */
 @Service //Сервис является соединительным звеном между Контроллером и Дао
-public class UserServiceImpl implements UserService, UserDetailsService { //Класс сервиса для работы с вэбом
+public class UserServiceImpl implements UserService { //Класс сервиса для работы с вэбом
 
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
+    private RoleRepository roleRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder,
+                           RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.roleRepository = roleRepository;
     }
 
     @Override
@@ -67,19 +71,13 @@ public class UserServiceImpl implements UserService, UserDetailsService { //Кл
         return userRepository.findById(id).get();
     }
 
+    @Override
     public Optional<User> findByUserName(String username) { //получение юзера по имени
         return userRepository.findByUserName(username);
     }
 
     @Override
-    @Transactional
-    //Загружает пользователя по имени пользователя
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> user = findByUserName(username);
-        if (user.isEmpty()) {
-            throw new UsernameNotFoundException(String.format("User '%s' not found", username));
-        }
-        return user.get();
+    public Set<Role> getRole() {
+        return new HashSet<>(roleRepository.findAll());
     }
-
 }

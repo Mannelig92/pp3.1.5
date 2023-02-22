@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import ru.kata.spring.boot_security.demo.model.User;
-import ru.kata.spring.boot_security.demo.service.UserServiceImpl;
+import ru.kata.spring.boot_security.demo.service.UserService;
 
 import java.security.Principal;
 
@@ -13,10 +13,10 @@ import java.security.Principal;
 @Controller
 //@RequestMapping помечает общий URL-адрес для каждого метода, например /lesson/allUsers
 public class UserController {
-    private UserServiceImpl userService;
+    private UserService userService;
 
     @Autowired
-    public UserController(UserServiceImpl userService) {
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
@@ -34,3 +34,4 @@ public class UserController {
     }
 
 }
+

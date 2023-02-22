@@ -3,6 +3,7 @@ package ru.kata.spring.boot_security.demo.model;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "roles")
@@ -55,27 +56,15 @@ public class Role implements GrantedAuthority {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Role other = (Role) obj;
-        if (id == null) {
-            if (other.id != null)
-                return false;
-        } else if (!id.equals(other.id))
-            return false;
-        return true;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Role other = (Role) o;
+        return Objects.equals(id, other.id) && Objects.equals(role, other.role);
     }
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
-        return result;
+        return Objects.hash(id, role);
     }
 }

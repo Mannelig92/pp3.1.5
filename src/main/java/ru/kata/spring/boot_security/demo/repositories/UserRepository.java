@@ -4,7 +4,7 @@ import org.springframework.stereotype.Repository;
 import ru.kata.spring.boot_security.demo.model.User;
 import java.util.Optional;
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Long> { //относится к Spring Data
     //ищем юзера по его имени пользователя
     //либо может быть такой человек, либо нет
     Optional<User> findByUserName(String name);

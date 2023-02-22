@@ -8,22 +8,23 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import ru.kata.spring.boot_security.demo.service.UserServiceImpl;
 
 //Настройка секьюрности по определенным URL, а также настройка UserDetails и GrantedAuthority.
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final SuccessUserHandler successUserHandler;
+
+    private UserDetailsService userDetailsService;
+
     @Autowired
-    private UserServiceImpl userService;
-
-    public WebSecurityConfig(SuccessUserHandler successUserHandler) {
+    public WebSecurityConfig(SuccessUserHandler successUserHandler, UserDetailsService userDetailsService) {
         this.successUserHandler = successUserHandler;
+        this.userDetailsService = userDetailsService;
     }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
     /*
@@ -34,16 +35,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     hasAnyRole страницам даёт доступ ко всем остальным
      */
         http
+                .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/user").hasAnyRole("USER", "ADMIN")
-                .antMatchers("/", "/login").permitAll()
+                .antMatchers("/api/**", "/", "/login").permitAll()
                 .and()
                 .formLogin().loginPage("/login")
                 .successHandler(successUserHandler)
                 .loginProcessingUrl("/login")
                 .permitAll()
                 .and()
+
                 //логаут по вызову первой ссылки, вторая это перенаправление после логаута
                 .logout().logoutUrl("/logout").logoutSuccessUrl("/login");
     }
@@ -59,14 +62,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
+
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
 
         authProvider.setPasswordEncoder(passwordEncoder());
-        authProvider.setUserDetailsService(userService);
+        authProvider.setUserDetailsService(userDetailsService);
         return authProvider;
     }
 }

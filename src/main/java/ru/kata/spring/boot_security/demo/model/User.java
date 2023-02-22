@@ -7,7 +7,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 /*
 UserDetails можно представить, как адаптер между БД пользователейи тем что требуется Spring Security внутри
@@ -28,12 +29,12 @@ public class User implements UserDetails {
     private String email;
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @Fetch(FetchMode.JOIN) //используется для ленивой загрузки
-    private List<Role> roles;
+    private Set<Role> roles;
 
     public User() {
     }
 
-    public User(String userName, String lastName, int age, String password, String email, List<Role> roles) {
+    public User(String userName, String lastName, int age, String password, String email, Set<Role> roles) {
         this.userName = userName;
         this.lastName = lastName;
         this.age = age;
@@ -42,11 +43,11 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
-    public List<Role> getRoles() {
+    public Set<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<Role> roles) {
+    public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
 
@@ -139,5 +140,20 @@ public class User implements UserDetails {
                 ", email='" + email + '\'' +
                 ", roles=" + roles +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return age == user.age && Objects.equals(id, user.id) && Objects.equals(userName, user.userName)
+                && Objects.equals(lastName, user.lastName) && Objects.equals(password, user.password)
+                && Objects.equals(email, user.email) && Objects.equals(roles, user.roles);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, userName, lastName, age, password, email, roles);
     }
 }

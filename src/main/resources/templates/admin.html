@@ -83,14 +83,8 @@
                         <td th:text="${user.getUserName()}">Name</td>
                         <td th:text="${user.getLastName()}">LastName</td>
                         <td th:text="${user.getAge()}">Age</td>
-                        <td th:text="${user.getEmail}">Email</td>
-                        <td th:switch="${#lists.size(user.getRoles())}">
-                     <span th:case="'1'"
-                           th:text="${user.getRoles().get(0).toString()}"></span>
-                            <span th:case="'2'"
-                                  th:text="${user.getRoles().get(0).toString() + ' ' + user.getRoles().get(1).toString()}">
-                            </span>
-                        </td>
+                        <td th:text="${user.getEmail()}">Email</td>
+                        <td th:text="${#strings.arrayJoin(user.roles, ' ')}"></td>
                         <td>
                             <!--Модальные кнопки!!!!!!!!!!!-->
                             <button class="btn btn-primary" id="table-cell-edit-button-1" type="button"
