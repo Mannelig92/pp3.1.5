@@ -11,7 +11,7 @@ import java.util.Objects;
 import java.util.Set;
 
 /*
-UserDetails можно представить, как адаптер между БД пользователейи тем что требуется Spring Security внутри
+UserDetails можно представить, как адаптер между БД пользователей тем что требуется Spring Security внутри
 SecurityContextHolder.
  */
 @Entity

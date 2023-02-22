@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService { //Класс сервис�
 
     @Override
     public User getUser(long id) { //Получение юзера по айди
-        return userRepository.findById(id).get();
+        return userRepository.findById(id).orElse(null);
     }
 
     @Override

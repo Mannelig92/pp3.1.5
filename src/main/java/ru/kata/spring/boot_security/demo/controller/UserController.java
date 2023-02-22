@@ -28,7 +28,7 @@ public class UserController {
     //Principal запоминает данные об авторизованном пользователе
     @GetMapping("/user")
     public String showUser(Principal principal, Model model) {
-        User user = userService.findByUserName(principal.getName()).get();
+        User user = userService.findByUserName(principal.getName()).orElse(null);
         model.addAttribute("user", user);
         return "user";
     }
