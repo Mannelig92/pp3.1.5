@@ -77,212 +77,192 @@
                         <th>Delete</th>
                     </tr>
                     </thead>
-                    <tbody id="table-body">
-                    <tr id="table-row-2" th:each="user: ${admin}">
-                        <td th:text="${user.getId()}">Id</td>
-                        <td th:text="${user.getUserName()}">Name</td>
-                        <td th:text="${user.getLastName()}">LastName</td>
-                        <td th:text="${user.getAge()}">Age</td>
-                        <td th:text="${user.getEmail()}">Email</td>
-                        <td th:text="${#strings.arrayJoin(user.roles, ' ')}"></td>
-                        <td>
-                            <!--Модальные кнопки!!!!!!!!!!!-->
-                            <button class="btn btn-primary" id="table-cell-edit-button-1" type="button"
-                                    data-toggle="modal"
-                                    th:data-target="${'#modalEdit' + user.getId()}">Edit
-                            </button>
-                        </td>
-                        <td>
-                            <button class="btn btn-primary" id="table-cell-edit-button-2" type="button"
-                                    data-toggle="modal"
-                                    th:data-target="${'#modalDelete' + user.getId()}">Delete
-                            </button>
-                        </td>
-                        <!--Модальное окно по изменению пользователя!!!!!!!!!!!!!!!!!!-->
-                        <div class="modal fade" role="dialog" tabindex="-1" th:id="${'modalEdit'+ user.id}">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <form th:method="PATCH" th:action="@{/admin/{id}(id=${user.id})}"
-                                          th:object="${user}">
-                                        <div class="modal-header d-md-flex" id="modalHeader1">
-                                            <h4 class="modal-title d-md-flex">Edit user</h4>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">×</span></button>
-                                        </div>
-                                        <div class="modal-body border rounded-0 justify-content-xl-center">
-                                            <div class="container justify-content-md-center">
-                                                <div class="row flex-column align-items-lg-center justify-content-xl-center align-items-xl-center"
-                                                     id="modal-body1-row">
-                                                    <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
-                                                         id="modal1-column">
-                                                        <label for="modal1-textInput"
-                                                               class="justify-content-lg-center justify-content-xl-center"
-                                                               id="modal1-fieldLabel">ID</label>
-                                                        <input th:name="id"
-                                                               class="justify-content-lg-center align-items-lg-center"
-                                                               th:type="text"
-                                                               id="modal1-textInput" disabled="" th:value="${user.id}">
-                                                    </div>
-                                                    <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
-                                                         id="modal1-column1">
-                                                        <label for="modal1-textInput-2"
-                                                               class="justify-content-lg-center justify-content-xl-center"
-                                                               id="modal1-fieldLabel2">First name</label>
-                                                        <input th:name="userName"
-                                                               class="justify-content-lg-center align-items-lg-center"
-                                                               th:type="text"
-                                                               id="modal1-textInput-2" th:value="${user.userName}">
-                                                    </div>
-                                                    <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
-                                                         id="modal1-column2">
-                                                        <label for="modal1-textInput-3"
-                                                               class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
-                                                               id="modal1-fieldLabel3">Last name</label>
-                                                        <input th:name="lastName" th:type="text" id="modal1-textInput-3"
-                                                               th:value="${user.lastName}">
-                                                    </div>
-                                                    <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
-                                                         id="modal1-column3">
-                                                        <label for="modal1-numInp"
-                                                               class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
-                                                               id="modal1-fieldLabel4">Age</label>
-                                                        <input th:name="age" th:type="number" id="modal1-numInp"
-                                                               th:value="${user.age}">
-                                                    </div>
-                                                    <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
-                                                         id="modal1-column4">
-                                                        <label for="modal1-email"
-                                                               class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
-                                                               id="modal1-fieldLabel-5">Email</label>
-                                                        <input th:name="email" th:type="email" id="modal1-email"
-                                                               th:value="${user.email}">
-                                                    </div>
-                                                    <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
-                                                         id="modal1-column5">
-                                                        <label for="modal1-password"
-                                                               class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
-                                                               id="modal1-fieldLabel6">Password</label>
-                                                        <input name="password" type="password" id="modal1-password"
-                                                               value="">
-                                                    </div>
-                                                    <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
-                                                         id="modal1-column6">
-                                                        <label for="modal1-select"
-                                                               class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
-                                                               id="modal1-fieldLabel7">Role</label>
-                                                        <select th:name="roles"
-                                                                class="justify-content-lg-center align-items-lg-center"
-                                                                id="modal1-select"
-                                                                multiple="">
-                                                            <option th:each="role: ${roles}" th:value="${role.id}">
-                                                                <th:block th:text="${role.toString()}">
-                                                                </th:block>
-                                                            </option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer" id="modalFooter1">
-                                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Close
-                                            </button>
-                                            <button class="btn btn-primary" type="submit">Edit</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        <!--Модальное окно по удалению пользователя!!!!!!!!!!!!!!!!!!-->
-                        <div class="modal fade" role="dialog" tabindex="-1" th:id="${'modalDelete' + user.id}">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title">Delete user</h4>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">×</span></button>
-                                    </div>
-                                    <div class="modal-body border rounded-0">
-                                        <div class="container">
-                                            <div class="row d-flex flex-column align-items-lg-center justify-content-xl-center align-items-xl-center"
-                                                 id="modal-2-row">
-                                                <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
-                                                     id="modal2-column">
-                                                    <label for="modal2-textInp"
-                                                           class="justify-content-lg-center justify-content-xl-center"
-                                                           id="modal2-fieldLabel">ID</label>
-                                                    <input class="justify-content-lg-center align-items-lg-center"
-                                                           th:type="text"
-                                                           id="modal2-textInp"
-                                                           disabled="" th:value="${user.id}">
-                                                </div>
-                                                <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
-                                                     id="modal2-column2">
-                                                    <label for="modal2-textInp2"
-                                                           class="justify-content-lg-center justify-content-xl-center"
-                                                           id="modal2-fieldLabel2">First name</label>
-                                                    <input class="justify-content-lg-center align-items-lg-center"
-                                                           th:type="text"
-                                                           id="modal2-textInp2"
-                                                           disabled="" th:value="${user.userName}">
-                                                </div>
-                                                <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
-                                                     id="modal2-column3">
-                                                    <label for="modal2-textInp3"
-                                                           class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
-                                                           id="modal2-fieldLabel3">Last name</label>
-                                                    <input th:type="text" id="modal2-textInp3" disabled=""
-                                                           th:value="${user.lastName}">
-                                                </div>
-                                                <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
-                                                     id="modal2-column4">
-                                                    <label for="modal2-numInp"
-                                                           class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
-                                                           id="modal2-fieldLabel4">Age</label>
-                                                    <input th:type="number" id="modal2-numInp" disabled=""
-                                                           th:value="${user.age}">
-                                                </div>
-                                                <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
-                                                     id="modal2-column5">
-                                                    <label for="modal2-email"
-                                                           class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
-                                                           id="modal2-fieldLabel5">Email</label>
-                                                    <input th:type="email" id="modal2-email" disabled=""
-                                                           th:value="${user.email}">
-                                                </div>
-                                                <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
-                                                     id="modal2-column6">
-                                                    <label for="modal2-select"
-                                                           class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
-                                                           id="modal2-fieldLabel6">Role</label>
-                                                    <select class="justify-content-lg-center align-items-lg-center"
-                                                            id="modal2-select"
-                                                            multiple=""
-                                                            disabled="">
-                                                        <option th:each="role: ${roles}" th:value="${role.getRole()}"
-                                                                th:selected="${user.roles.contains(role)}">
-                                                            <th:block th:text="${role.toString()}">
-                                                            </th:block>
-                                                        </option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Close
-                                        </button>
-                                        <form th:method="DELETE" th:action="@{/admin/{id}(id=${user.id})}">
-                                            <button class="btn btn-danger" type="submit">Delete</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </tr>
+                    <tbody id="table_body">
                     </tbody>
                 </table>
             </div>
         </div>
+        <!--Модальное окно по изменению пользователя!!!!!!!!!!!!!!!!!!-->
+        <div class="modal fade" role="dialog" tabindex="-1" th:id="${'modalEdit'+ user.id}">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form th:method="PATCH" th:action="@{/admin/{id}(id=${user.id})}"
+                          th:object="${user}">
+                        <div class="modal-header d-md-flex" id="modalHeader1">
+                            <h4 class="modal-title d-md-flex">Edit user</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span></button>
+                        </div>
+                        <div class="modal-body border rounded-0 justify-content-xl-center">
+                            <div class="container justify-content-md-center">
+                                <div class="row flex-column align-items-lg-center justify-content-xl-center align-items-xl-center"
+                                     id="modal-body1-row">
+                                    <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
+                                         id="modal1-column">
+                                        <label for="modal1-textInput"
+                                               class="justify-content-lg-center justify-content-xl-center"
+                                               id="modal1-fieldLabel">ID</label>
+                                        <input th:name="id"
+                                               class="justify-content-lg-center align-items-lg-center"
+                                               th:type="text"
+                                               id="modal1-textInput" disabled="" th:value="${user.id}">
+                                    </div>
+                                    <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
+                                         id="modal1-column1">
+                                        <label for="modal1-textInput-2"
+                                               class="justify-content-lg-center justify-content-xl-center"
+                                               id="modal1-fieldLabel2">First name</label>
+                                        <input th:name="userName"
+                                               class="justify-content-lg-center align-items-lg-center"
+                                               th:type="text"
+                                               id="modal1-textInput-2" th:value="${user.userName}">
+                                    </div>
+                                    <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
+                                         id="modal1-column2">
+                                        <label for="modal1-textInput-3"
+                                               class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
+                                               id="modal1-fieldLabel3">Last name</label>
+                                        <input th:name="lastName" th:type="text" id="modal1-textInput-3"
+                                               th:value="${user.lastName}">
+                                    </div>
+                                    <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
+                                         id="modal1-column3">
+                                        <label for="modal1-numInp"
+                                               class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
+                                               id="modal1-fieldLabel4">Age</label>
+                                        <input th:name="age" th:type="number" id="modal1-numInp"
+                                               th:value="${user.age}">
+                                    </div>
+                                    <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
+                                         id="modal1-column4">
+                                        <label for="modal1-email"
+                                               class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
+                                               id="modal1-fieldLabel-5">Email</label>
+                                        <input th:name="email" th:type="email" id="modal1-email"
+                                               th:value="${user.email}">
+                                    </div>
+                                    <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
+                                         id="modal1-column5">
+                                        <label for="modal1-password"
+                                               class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
+                                               id="modal1-fieldLabel6">Password</label>
+                                        <input name="password" type="password" id="modal1-password"
+                                               value="">
+                                    </div>
+                                    <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
+                                         id="modal1-column6">
+                                        <label for="modal1-select"
+                                               class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
+                                               id="modal1-fieldLabel7">Role</label>
+                                        <select th:name="roles"
+                                                class="justify-content-lg-center align-items-lg-center"
+                                                id="modal1-select"
+                                                multiple="">
+                                            <option th:each="role: ${roles}" th:value="${role.id}">
+                                                <th:block th:text="${role.toString()}">
+                                                </th:block>
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer" id="modalFooter1">
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Close
+                            </button>
+                            <button class="btn btn-primary" type="submit">Edit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--Модальное окно по удалению пользователя!!!!!!!!!!!!!!!!!!-->
+        <div class="modal fade" role="dialog" tabindex="-1" th:id="${'modalDelete' + user.id}">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Delete user</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span></button>
+                    </div>
+                    <div class="modal-body border rounded-0">
+                        <div class="container">
+                            <div class="row d-flex flex-column align-items-lg-center justify-content-xl-center align-items-xl-center"
+                                 id="modal-2-row">
+                                <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
+                                     id="modal2-column">
+                                    <label for="modal2-textInp"
+                                           class="justify-content-lg-center justify-content-xl-center"
+                                           id="modal2-fieldLabel">ID</label>
+                                    <input class="justify-content-lg-center align-items-lg-center"
+                                           th:type="text"
+                                           id="modal2-textInp"
+                                           disabled="" th:value="${user.id}">
+                                </div>
+                                <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
+                                     id="modal2-column2">
+                                    <label for="modal2-textInp2"
+                                           class="justify-content-lg-center justify-content-xl-center"
+                                           id="modal2-fieldLabel2">First name</label>
+                                    <input class="justify-content-lg-center align-items-lg-center"
+                                           th:type="text"
+                                           id="modal2-textInp2"
+                                           disabled="" th:value="${user.userName}">
+                                </div>
+                                <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
+                                     id="modal2-column3">
+                                    <label for="modal2-textInp3"
+                                           class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
+                                           id="modal2-fieldLabel3">Last name</label>
+                                    <input th:type="text" id="modal2-textInp3" disabled=""
+                                           th:value="${user.lastName}">
+                                </div>
+                                <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
+                                     id="modal2-column4">
+                                    <label for="modal2-numInp"
+                                           class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
+                                           id="modal2-fieldLabel4">Age</label>
+                                    <input th:type="number" id="modal2-numInp" disabled=""
+                                           th:value="${user.age}">
+                                </div>
+                                <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
+                                     id="modal2-column5">
+                                    <label for="modal2-email"
+                                           class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
+                                           id="modal2-fieldLabel5">Email</label>
+                                    <input th:type="email" id="modal2-email" disabled=""
+                                           th:value="${user.email}">
+                                </div>
+                                <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
+                                     id="modal2-column6">
+                                    <label for="modal2-select"
+                                           class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
+                                           id="modal2-fieldLabel6">Role</label>
+                                    <select class="justify-content-lg-center align-items-lg-center"
+                                            id="modal2-select"
+                                            multiple=""
+                                            disabled="">
+                                        <option th:each="role: ${roles}" th:value="${role.getRole()}"
+                                                th:selected="${user.roles.contains(role)}">
+                                            <th:block th:text="${role.toString()}">
+                                            </th:block>
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Close
+                        </button>
+                        <form th:method="DELETE" th:action="@{/admin/{id}(id=${user.id})}">
+                            <button class="btn btn-danger" type="submit">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!--        Добавление пользователя!!!!!!!!!!!!!!!!!!-->
         <div class="tab-pane" role="tabpanel" id="tabP-2">
             <div class="container border rounded d-flex flex-column justify-content-lg-center justify-content-xl-center"
@@ -349,5 +329,6 @@
         </div>
     </div>
 </div>
+<script th:src="@{/js/adminScript.js}"></script>
 </body>
 </html>

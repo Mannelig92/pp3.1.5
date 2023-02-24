@@ -9,7 +9,7 @@ import ru.kata.spring.boot_security.demo.service.UserServiceImpl;
 
 import java.util.List;
 
-@RestController //тот же контроллер + @ResponseBody над каждый методом
+@RestController //тот же контроллер + @ResponseBody над каждым методом
 @RequestMapping("/api")
 public class RESTController {
 
@@ -22,7 +22,8 @@ public class RESTController {
 
     @GetMapping("/admin")
     public List<User> allUsers() {
-        return userService.getAllUsers();
+        List<User> listUsers = userService.getAllUsers();
+        return listUsers;
     }
 
     @GetMapping("/admin/{id}")
