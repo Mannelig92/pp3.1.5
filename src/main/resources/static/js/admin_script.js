@@ -14,22 +14,23 @@ async function adminPage() { //async гарантирует что функция вернёт промис
         alert(`Error, ${page.status}`) //иначе вывод ошибки
     }
 }
-    function table(listUsers){
-        const table_body = document.getElementById("table_body") //соединяем с html-файлом таблицу
-        let HTMLData = ""
-        for(let user of listUsers){ //перебор по юзерам
-            let roles = []
-            for(let role of user.roles) {
-                roles.push(" " + role.role.toString())
-            }
-            //тут снова спецсимвол
-            HTMLData += `<tr> 
+
+function table(listUsers) {
+    const table_body = document.getElementById("table_body") //соединяем с html-файлом таблицу
+    let HTMLData = ""
+    for (let user of listUsers) { //перебор по юзерам
+        let roles = []
+        for (let role of user.roles) {
+            roles.push(" " + role.role.toString().substring(5))
+        }
+        //тут снова спецсимвол
+        HTMLData += `<tr>  
                 <td>${user.id}</td>
                 <td>${user.userName}</td>
                 <td>${user.lastName}</td>
                 <td>${user.age}</td>
                 <td>${user.email}</td>
-                <td>${roles}</td>
+                <td>${roles.join(" ")}</td>
                 <td>
                     <button class="btn btn-primary" id="table-cell-edit-button-1" data-toggle="modal"
                            onClick="editModalWindow(${user.id})" data-target="#editModal">Edit</button>
@@ -39,7 +40,8 @@ async function adminPage() { //async гарантирует что функция вернёт промис
                             onClick="deleteModalWindow(${user.id})" data-target="#deleteModal">Edit</button>
                 </td>
             </tr>`
-        }
-    table_body.innerHTML = HTMLData
     }
-    await adminPage()
+    table_body.innerHTML = HTMLData
+}
+
+adminPage()
