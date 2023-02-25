@@ -20,11 +20,11 @@ function table(listUsers) {
     let HTMLData = ""
     for (let user of listUsers) { //перебор по юзерам
         let roles = []
-        for (let role of user.roles) {
+        for (let role of user.roles) { //по ролям юзера
             roles.push(" " + role.role.toString().substring(5))
         }
         //тут снова спецсимвол
-        HTMLData += `<tr>  
+        HTMLData += `<tr> 
                 <td>${user.id}</td>
                 <td>${user.userName}</td>
                 <td>${user.lastName}</td>

@@ -5,25 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>pp3.1.4</title>
     <script defer src="/js/jquery-3.6.3.js"></script>
-<!--    <script defer src="/js/admin_script.js"></script>-->
+    <!--    <script defer src="/js/admin_script.js"></script>-->
     <script th:src="@{/js/admin_script.js}"></script>
+    <script th:src="@{/js/newUser_script.js}"></script>
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
     <link rel="stylesheet" type="text/css" href="/css/Navbar-Centered-Brand-Dark-icons.css">
-<!--        <link href="/js/admin_script.js">-->
+    <!--        <link href="/js/admin_script.js">-->
     <!--    <link href="/js/jquery.min.js">-->
 
 
-    <!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"-->
-    <!--          integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">-->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+              integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
 
-    <!--    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"-->
-    <!--            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"-->
-    <!--            crossorigin="anonymous"></script>-->
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+                integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+                crossorigin="anonymous"></script>
 
-    <!--    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"-->
-    <!--            integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"-->
-    <!--            crossorigin="anonymous"></script>-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
+                crossorigin="anonymous"></script>
 </head>
 
 <body class="text-body" style="background: var(--light);">
@@ -57,17 +58,21 @@
 </div>
 <p id="par-mid">Admin panel</p>
 <div id="tabs">
+    <!--    Первый табс-->
     <ul class="nav nav-tabs" role="tablist" id="tab-items">
         <li class="nav-item" role="presentation" id="tab-1">
             <a class="nav-link active" role="tab" data-toggle="tab"
-               id="tab-link-1" href="#tabP-1">Users table</a></li>
+               id="tab-link-1" href="#tabp-1" aria-selected="true">Users table</a>
+        </li>
+        <!--     Второй табс-->
         <li class="nav-item" role="presentation" id="tab-2">
             <a class="nav-link" role="tab" data-toggle="tab"
-               id="tab-link-2" href="#tabP-2">New user</a></li>
+               id="tab-link-2" href="#tabp-2" aria-selected="false">New user</a>
+        </li>
     </ul>
     <!--    Таблица!!!!!!!!!!!!!!!!!!-->
     <div class="tab-content" id="tab-content">
-        <div class="tab-pane active border rounded" role="tabpanel" id="tabP-1">
+        <div class="tab-pane active border rounded" role="tabpanel" id="tabp-1">
             <p class="border rounded-0" id="tab-pane-par">All users</p>
             <div class="table-responsive" id="table">
                 <table class="table table-striped">
@@ -88,7 +93,7 @@
             </div>
         </div>
         <!--        Добавление пользователя!!!!!!!!!!!!!!!!!!-->
-        <div class="tab-pane" role="tabpanel" id="tabP-2">
+        <div class="tab-pane" role="tabpanel" id="tabp-2">
             <div class="container border rounded d-flex flex-column justify-content-lg-center justify-content-xl-center"
                  id="tab-pane2-container">
                 <div class="row d-flex d-xl-flex justify-content-xl-start" id="t-p-r">
@@ -98,51 +103,55 @@
                 </div>
                 <div class="row d-flex flex-column align-items-lg-center justify-content-xl-center align-items-xl-center"
                      id="t-p-r2">
-                    <div class="col d-flex flex-column align-items-lg-center align-items-xl-center" id="tp2-col1">
-                        <label for="tp2-ti" class="justify-content-lg-center justify-content-xl-center"
-                               id="tp2-fl">First name</label>
-                        <input class="justify-content-lg-center align-items-lg-center" type="text" id="tp2-ti">
-                    </div>
-                    <div class="col d-flex flex-column align-items-lg-center align-items-xl-center" id="tp2-col2">
-                        <label for="tp2-ti2"
-                               class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
-                               id="tp2-fl2">Last name</label>
-                        <input type="text" id="tp2-ti2">
-                    </div>
-                    <div class="col d-flex flex-column align-items-lg-center align-items-xl-center" id="tp2-col3">
-                        <label for="tp2-ni"
-                               class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
-                               id="tp2-fl3">Age</label>
-                        <input type="number" id="tp2-ni">
-                    </div>
-                    <div class="col d-flex flex-column align-items-lg-center align-items-xl-center" id="tp2-col4">
-                        <label for="tp2-em"
-                               class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
-                               id="tp2-fl4">Email</label>
-                        <input type="email" id="tp2-em">
-                    </div>
-                    <div class="col d-flex flex-column align-items-lg-center justify-content-xl-center align-items-xl-center"
-                         id="tp2-col5">
-                        <label for="tp2-pas"
-                               class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
-                               id="tp2-fl5">Password</label>
-                        <input type="password" id="tp2-pas">
-                    </div>
-                    <div class="col d-flex flex-column align-items-lg-center align-items-xl-center" id="tp2-col6">
-                        <label for="tp2-sel"
-                               class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
-                               id="tp2-fl6">Role</label>
-                        <select name="roles" class="justify-content-lg-center align-items-lg-center"
-                                id="tp2-sel" multiple="">
-                            <option id="roleNewUser" value="USER">USER</option>
-                            <option id="roleNewAdmin" value="ADMIN">ADMIN</option>
-                        </select>
-                    </div>
-                    <div class="col d-flex flex-column justify-content-lg-center align-items-lg-center
+                    <form id="formNewUser" role="form">
+                        <div class="col d-flex flex-column align-items-lg-center align-items-xl-center" id="tp2-col1">
+                            <label for="tp2-ti" class="justify-content-lg-center justify-content-xl-center"
+                                   id="tp2-fl">First name</label>
+                            <input name="name" class="justify-content-lg-center align-items-lg-center" th:type="text"
+                                   id="tp2-ti">
+                        </div>
+                        <div class="col d-flex flex-column align-items-lg-center align-items-xl-center" id="tp2-col2">
+                            <label for="tp2-ti2"
+                                   class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
+                                   id="tp2-fl2">Last name</label>
+                            <input name="lastName" th:type="text" id="tp2-ti2">
+                        </div>
+                        <div class="col d-flex flex-column align-items-lg-center align-items-xl-center" id="tp2-col3">
+                            <label for="tp2-ni"
+                                   class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
+                                   id="tp2-fl3">Age</label>
+                            <input name="age" th:type="number" id="tp2-ni">
+                        </div>
+                        <div class="col d-flex flex-column align-items-lg-center align-items-xl-center" id="tp2-col4">
+                            <label for="tp2-em"
+                                   class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
+                                   id="tp2-fl4">Email</label>
+                            <input name="email" th:type="email" id="tp2-em">
+                        </div>
+                        <div class="col d-flex flex-column align-items-lg-center justify-content-xl-center align-items-xl-center"
+                             id="tp2-col5">
+                            <label for="tp2-pas"
+                                   class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
+                                   id="tp2-fl5">Password</label>
+                            <input name="password" th:type="password" id="tp2-pas">
+                        </div>
+                        <div class="col d-flex flex-column align-items-lg-center align-items-xl-center" id="tp2-col6">
+                            <label for="tp2-sel"
+                                   class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
+                                   id="tp2-fl6">Role</label>
+                            <select name="roles" class="justify-content-lg-center align-items-lg-center "
+                                    id="tp2-sel" multiple="">
+                                <option id="roleNewUser" value="USER">USER</option>
+                                <option id="roleNewAdmin" value="ADMIN">ADMIN</option>
+                            </select>
+                        </div>
+                        <div class="col d-flex flex-column justify-content-lg-center align-items-lg-center
                                 justify-content-xl-center align-items-xl-center"
-                         id="tp2-col7">
-                        <button class="btn btn-primary" id="tp2-but" type="submit">Add new user</button>
-                    </div>
+                             id="tp2-col7">
+                            <button class="btn btn-primary" id="tp2-but" type="submit"
+                            form="formNewUser" onclick="addNewUser()">Add new user</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -305,7 +314,7 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
-                    <button class="btn btn-danger" type="submit">Delete</button>
+                <button class="btn btn-danger" type="submit">Delete</button>
             </div>
         </div>
     </div>
