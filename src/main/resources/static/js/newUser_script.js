@@ -19,7 +19,7 @@ async function addNewUser(){
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                name: newUser.name.value,
+                name: newUser.userName.value, //с помощью value получаем данные из вводимого поля
                 lastName: newUser.lastName.value,
                 age: newUser.age.value,
                 email: newUser.email.value,
@@ -27,7 +27,7 @@ async function addNewUser(){
                 roles: rolesList
             })
         }
-        await fetch(url, method).then(() =>{
+        await fetch(url, method).then(() =>{ //после выполнения возвращаемся на страницу админа
             newUser.reset()
             adminPage()
         })

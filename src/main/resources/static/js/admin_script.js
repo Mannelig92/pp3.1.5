@@ -33,7 +33,7 @@ function table(listUsers) {
                 <td>${roles.join(" ")}</td>
                 <td>
                     <button class="btn btn-primary" id="table-cell-edit-button-1" data-toggle="modal"
-                           onClick="editModalWindow(${user.id})" data-target="#editModal">Edit</button>
+                           onClick="editModalWindow(${user.id})" data-target="#modalEdit">Edit</button>
                 </td>
                 <td>
                     <button class="btn btn-primary" id="table-cell-edit-button-2" data-toggle="modal"

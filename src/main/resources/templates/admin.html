@@ -8,6 +8,7 @@
     <!--    <script defer src="/js/admin_script.js"></script>-->
     <script th:src="@{/js/admin_script.js}"></script>
     <script th:src="@{/js/newUser_script.js}"></script>
+    <script th:src="@{/js/modalEdit_script.js}"></script>
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
     <link rel="stylesheet" type="text/css" href="/css/Navbar-Centered-Brand-Dark-icons.css">
@@ -15,16 +16,16 @@
     <!--    <link href="/js/jquery.min.js">-->
 
 
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
-              integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+          integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
 
-        <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
-                integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-                crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
-                integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
-                crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
+            crossorigin="anonymous"></script>
 </head>
 
 <body class="text-body" style="background: var(--light);">
@@ -149,7 +150,8 @@
                                 justify-content-xl-center align-items-xl-center"
                              id="tp2-col7">
                             <button class="btn btn-primary" id="tp2-but" type="submit"
-                            form="formNewUser" onclick="addNewUser()">Add new user</button>
+                                    form="formNewUser" onclick="addNewUser()">Add new user
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -161,6 +163,7 @@
 <div class="modal fade" role="dialog" tabindex="-1" id="modalEdit">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
+            <form id="formEdit">
             <div class="modal-header d-md-flex" id="modalHeader1">
                 <h4 class="modal-title d-md-flex">Edit user</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -170,75 +173,77 @@
                 <div class="container justify-content-md-center">
                     <div class="row flex-column align-items-lg-center justify-content-xl-center align-items-xl-center"
                          id="modal-body1-row">
-                        <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
-                             id="modal1-column">
-                            <label for="modal1-textInput"
-                                   class="justify-content-lg-center justify-content-xl-center"
-                                   id="modal1-fieldLabel">ID</label>
-                            <input name="id"
-                                   class="justify-content-lg-center align-items-lg-center"
-                                   th:type="text"
-                                   id="modal1-textInput" disabled="">
-                        </div>
-                        <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
-                             id="modal1-column1">
-                            <label for="modal1-textInput-2"
-                                   class="justify-content-lg-center justify-content-xl-center"
-                                   id="modal1-fieldLabel2">First name</label>
-                            <input name="userName"
-                                   class="justify-content-lg-center align-items-lg-center"
-                                   th:type="text"
-                                   id="modal1-textInput-2">
-                        </div>
-                        <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
-                             id="modal1-column2">
-                            <label for="modal1-textInput-3"
-                                   class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
-                                   id="modal1-fieldLabel3">Last name</label>
-                            <input name="lastName" th:type="text" id="modal1-textInput-3">
-                        </div>
-                        <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
-                             id="modal1-column3">
-                            <label for="modal1-numInp"
-                                   class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
-                                   id="modal1-fieldLabel4">Age</label>
-                            <input name="age" th:type="number" id="modal1-numInp">
-                        </div>
-                        <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
-                             id="modal1-column4">
-                            <label for="modal1-email"
-                                   class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
-                                   id="modal1-fieldLabel-5">Email</label>
-                            <input name="email" th:type="email" id="modal1-email">
-                        </div>
-                        <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
-                             id="modal1-column5">
-                            <label for="modal1-password"
-                                   class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
-                                   id="modal1-fieldLabel6">Password</label>
-                            <input name="password" type="password" id="modal1-password"
-                                   value="">
-                        </div>
-                        <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
-                             id="modal1-column6">
-                            <label for="modal1-select"
-                                   class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
-                                   id="modal1-fieldLabel7">Role</label>
-                            <select class="justify-content-lg-center align-items-lg-center"
-                                    id="modal1-select"
-                                    multiple="">
-                                <option id="roleUser" value="USER">USER</option>
-                                <option id="roleAdmin" value="ADMIN">ADMIN</option>
-                            </select>
-                        </div>
+<!--                        <form id="formEdit">-->
+                            <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
+                                 id="modal1-column">
+                                <label for="modal1-textInput"
+                                       class="justify-content-lg-center justify-content-xl-center"
+                                       id="modal1-fieldLabel">ID</label>
+                                <input name="id"
+                                       class="justify-content-lg-center align-items-lg-center"
+                                       th:type="text"
+                                       id="modal1-textInput" disabled="">
+                            </div>
+                            <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
+                                 id="modal1-column1">
+                                <label for="modal1-textInput-2"
+                                       class="justify-content-lg-center justify-content-xl-center"
+                                       id="modal1-fieldLabel2">First name</label>
+                                <input name="name"
+                                       class="justify-content-lg-center align-items-lg-center"
+                                       th:type="text"
+                                       id="modal1-textInput-2">
+                            </div>
+                            <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
+                                 id="modal1-column2">
+                                <label for="modal1-textInput-3"
+                                       class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
+                                       id="modal1-fieldLabel3">Last name</label>
+                                <input name="lastName" th:type="text" id="modal1-textInput-3">
+                            </div>
+                            <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
+                                 id="modal1-column3">
+                                <label for="modal1-numInp"
+                                       class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
+                                       id="modal1-fieldLabel4">Age</label>
+                                <input name="age" th:type="number" id="modal1-numInp">
+                            </div>
+                            <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
+                                 id="modal1-column4">
+                                <label for="modal1-email"
+                                       class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
+                                       id="modal1-fieldLabel-5">Email</label>
+                                <input name="email" th:type="email" id="modal1-email">
+                            </div>
+                            <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
+                                 id="modal1-column5">
+                                <label for="modal1-password"
+                                       class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
+                                       id="modal1-fieldLabel6">Password</label>
+                                <input name="password" type="password" id="modal1-password"
+                                       value="">
+                            </div>
+                            <div class="col d-flex flex-column align-items-md-center align-items-lg-center align-items-xl-center"
+                                 id="modal1-column6">
+                                <label for="modalRoleEd"
+                                       class="justify-content-lg-center align-items-lg-center justify-content-xl-center"
+                                       id="modal1-fieldLabel7">Role</label>
+                                <select class="justify-content-lg-center align-items-lg-center"
+                                        id="modalRoleEd"
+                                        multiple="">
+                                    <option id="roleUser" value="USER">USER</option>
+                                    <option id="roleAdmin" value="ADMIN">ADMIN</option>
+                                </select>
+                            </div>
+<!--                        </form>-->
                     </div>
                 </div>
             </div>
             <div class="modal-footer" id="modalFooter1">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Close
-                </button>
-                <button class="btn btn-primary" type="submit">Edit</button>
+                <button class="btn btn-secondary" type="button" data-dismiss="modal" id="editClose">Close</button>
+                <button class="btn btn-primary" type="submit" onclick="edit(); adminPage()">Edit</button>
             </div>
+            </form>
         </div>
     </div>
 </div>

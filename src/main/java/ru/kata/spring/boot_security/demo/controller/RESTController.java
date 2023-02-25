@@ -1,6 +1,8 @@
 package ru.kata.spring.boot_security.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.exception_handling.NoSuchUserException;
 import ru.kata.spring.boot_security.demo.model.User;
@@ -35,15 +37,15 @@ public class RESTController {
     }
 
     @PostMapping("/admin")
-    public User addNewUser(@RequestBody User user) { //@Rb связывает тело HTTP-метода с параметром метода контроллера
+    public ResponseEntity<User> addNewUser(@RequestBody User user) { //@Rb связывает тело HTTP-метода с параметром метода контроллера
         userService.saveUser(user);
-        return user;
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping("/admin")
-    public User editUser(@RequestBody User user) {
+    public ResponseEntity<User> editUser(@RequestBody User user) {
         userService.editUser(user);
-        return user;
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/admin/{id}")
