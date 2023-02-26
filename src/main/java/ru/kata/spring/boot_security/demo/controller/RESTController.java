@@ -42,8 +42,9 @@ public class RESTController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping("/admin")
-    public ResponseEntity<User> editUser(@RequestBody User user) {
+    @PutMapping("/admin/{id}")
+    public ResponseEntity<User> editUser(@RequestBody User user, @PathVariable("id") Long id) {
+        user.setId(id);
         userService.editUser(user);
         return new ResponseEntity<>(HttpStatus.OK);
     }

@@ -37,7 +37,7 @@ function table(listUsers) {
                 </td>
                 <td>
                     <button class="btn btn-primary" id="table-cell-edit-button-2" data-toggle="modal"
-                            onClick="deleteModalWindow(${user.id})" data-target="#deleteModal">Edit</button>
+                            onClick="deleteModalWindow(${user.id})" data-target="#modalDelete">Delete</button>
                 </td>
             </tr>`
     }

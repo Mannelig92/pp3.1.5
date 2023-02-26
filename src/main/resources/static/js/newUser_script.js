@@ -1,12 +1,12 @@
 //document - объект представл€ющий дом-дерево
 const newUser = document.getElementById("formNewUser") //получаем ссылку на объект по id
 //получаем ссылку по селектору и преобразовываем в массив с помощью selectedOptions
-const newRole = document.document.querySelector("#tp2-sel").selectedOptions
+const newRole = document.querySelector("#roleNew")
 
-async function addNewUser(){
+async function addNewUser() {
     newUser.addEventListener("submit", save) //действие после срабатывани€ событи€
 
-    async function save(addEvent){
+    async function save(addEvent) {
         addEvent.preventDefault()
         const url = "/api/admin"
         let rolesList = []
@@ -27,7 +27,7 @@ async function addNewUser(){
                 roles: rolesList
             })
         }
-        await fetch(url, method).then(() =>{ //после выполнени€ возвращаемс€ на страницу админа
+        await fetch(url, method).then(() => { //после выполнени€ возвращаемс€ на страницу админа
             newUser.reset()
             adminPage()
         })
