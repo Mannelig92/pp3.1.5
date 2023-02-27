@@ -43,5 +43,4 @@ function table(listUsers) {
     }
     table_body.innerHTML = HTMLData
 }
-
 adminPage()
