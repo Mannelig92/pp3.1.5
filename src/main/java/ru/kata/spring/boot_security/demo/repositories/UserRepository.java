@@ -13,6 +13,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Мне подсказали сделать выборку через квэри, стало на 5 селектов меньше,
     Это подходит для решения n+1 или читал ещё про @BatchSize, можно ли использовать его для решения проблемы?
      */
-    @Query("select u from User u where u.userName = :name")
+    @Query("select u from User u join fetch u.roles where u.userName = :name")
     Optional<User> findByUserName(String name);
 }

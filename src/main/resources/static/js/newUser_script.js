@@ -3,12 +3,9 @@ const newUser = document.getElementById("formNewUser") //получаем ссылку на объе
 //получаем ссылку по селектору и преобразовываем в массив с помощью selectedOptions
 const newRole = document.querySelector("#roleNew").selectedOptions
 
-async function addNewUser() {
-    newUser.addEventListener("submit", save) //действие после срабатывания события
 
-    async function save(addEvent) {
-        addEvent.preventDefault()
-        const url = "/api/admin"
+    newUser.addEventListener("submit", save => { //действие после срабатывания события
+        save.preventDefault()
         let rolesList = []
         for (let i = 0; i < newRole.length; i++) {
             rolesList.push({
@@ -16,7 +13,7 @@ async function addNewUser() {
                 name: "ROLE_" + newRole[i].text
             })
         }
-        let method = {
+        fetch('/api/admin',{
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -31,12 +28,21 @@ async function addNewUser() {
                 password: newUser.password.value,
                 roles: rolesList
             })
-        }
-        //после выполнения возвращаемся на страницу админа
-        await fetch(url, method).then(() => {
-            newUser.reset() //сбрасываем данные по юзеру
-            adminPage() //обновляем для появления нового юзера
-            $("#tab-link-1").click()
+        }).then(() => {
+            newUser.reset()
+            adminPage()
+            change_tab()
         })
-    }
+    })
+function change_tab(){
+    const newUserTab = document.getElementById('tab-link-2');
+    const newUser = document.getElementById('tabp-2');
+    newUserTab.setAttribute('class', 'nav-link');
+    newUser.setAttribute('class', 'tab-pane');
+
+    const userListTab = document.getElementById('tab-link-1');
+    const userList = document.getElementById('tabp-1');
+    userListTab.setAttribute('class', 'nav-link active show');
+    userList.setAttribute('class', 'tab-pane active show');
+
 }

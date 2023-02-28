@@ -5,14 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>pp3.1.4</title>
     <script defer src="/js/jquery-3.6.3.js"></script>
-    <!--    <script defer src="/js/admin_script.js"></script>-->
 
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
     <link rel="stylesheet" type="text/css" href="/css/Navbar-Centered-Brand-Dark-icons.css">
-    <!--        <link href="/js/admin_script.js">-->
-    <!--    <link href="/js/jquery.min.js">-->
-
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
           integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
@@ -61,17 +57,17 @@
     <ul class="nav nav-tabs" role="tablist" id="tab-items">
         <li class="nav-item" role="presentation" id="tab-1">
             <a class="nav-link active" role="tab" data-toggle="tab"
-               id="tab-link-1" href="#tabp-1" aria-selected="true">Users table</a>
+               id="tab-link-1" href="#tabp-1" aria-selected="true" aria-controls="tabp-1">Users table</a>
         </li>
         <!--     Второй табс-->
         <li class="nav-item" role="presentation" id="tab-2">
             <a class="nav-link" role="tab" data-toggle="tab"
-               id="tab-link-2" href="#tabp-2" aria-selected="false">New user</a>
+               id="tab-link-2" href="#tabp-2" aria-selected="false" aria-controls="tabp-2">New user</a>
         </li>
     </ul>
     <!--    Таблица!!!!!!!!!!!!!!!!!!-->
     <div class="tab-content" id="tab-content">
-        <div class="tab-pane active border rounded" role="tabpanel" id="tabp-1">
+        <div class="tab-pane active border rounded" role="tabpanel" id="tabp-1" aria-labelledby="tab-link-1">
             <p class="border rounded-0" id="tab-pane-par">All users</p>
             <div class="table-responsive" id="table">
                 <table class="table table-striped">
@@ -92,7 +88,7 @@
             </div>
         </div>
         <!--        Добавление пользователя!!!!!!!!!!!!!!!!!!-->
-        <div class="tab-pane" role="tabpanel" id="tabp-2">
+        <div class="tab-pane" role="tabpanel" id="tabp-2" aria-labelledby="tab-link-2">
             <div class="container border rounded d-flex flex-column justify-content-lg-center justify-content-xl-center"
                  id="tab-pane2-container">
                 <div class="row d-flex d-xl-flex justify-content-xl-start" id="t-p-r">
@@ -148,7 +144,7 @@
                                 justify-content-xl-center align-items-xl-center"
                              id="tp2-col7">
                             <button class="btn btn-primary" id="tp2-but" type="submit"
-                                    form="formNewUser" onclick="addNewUser()">Add new user
+                                    form="formNewUser">Add new user
                             </button>
                         </div>
                     </form>

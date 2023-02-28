@@ -1,9 +1,6 @@
 package ru.kata.spring.boot_security.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.exception_handling.NoSuchUserException;
 import ru.kata.spring.boot_security.demo.model.User;
@@ -25,8 +22,7 @@ public class RESTController {
 
     @GetMapping("/admin")
     public List<User> allUsers() {
-        List<User> listUsers = userService.getAllUsers();
-        return listUsers;
+        return userService.getAllUsers();
     }
 
     @GetMapping("/admin/{id}")
@@ -39,16 +35,16 @@ public class RESTController {
     }
 
     @PostMapping("/admin")
-    public ResponseEntity<User> addNewUser(@RequestBody User user) { //@Rb связывает тело HTTP-метода с параметром метода контроллера
+    public User addNewUser(@RequestBody User user) { //@Rb связывает тело HTTP-метода с параметром метода контроллера
         userService.saveUser(user);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return user;
     }
 
     @PutMapping("/admin/{id}")
-    public ResponseEntity<User> editUser(@RequestBody User user, @PathVariable("id") Long id) {
+    public User editUser(@RequestBody User user, @PathVariable("id") Long id) {
         user.setId(id);
         userService.editUser(user);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return user;
     }
 
     @DeleteMapping("/admin/{id}")
@@ -61,8 +57,7 @@ public class RESTController {
         return "User with ID: " + id + " was deleted.";
     }
     @GetMapping("/user")
-    public ResponseEntity<User> showUser(Principal principal) {
-        User user = userService.findByUserName(principal.getName()).orElse(null);
-        return new ResponseEntity<>(user, HttpStatus.OK);
+    public User showUser(Principal principal) {
+        return userService.findByUserName(principal.getName()).orElse(null);
     }
 }

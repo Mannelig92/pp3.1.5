@@ -4,7 +4,6 @@ const edit_name = document.getElementById("modal1-textInput-2")
 const edit_lastName = document.getElementById("modal1-textInput-3")
 const edit_age = document.getElementById("modal1-numInp")
 const edit_email = document.getElementById("modal1-email")
-// const edit_password = document.getElementById("modal1-password")
 
 async function editModalWindow(id) {
     jQuery.noConflict();
@@ -18,7 +17,6 @@ async function editModalWindow(id) {
             edit_lastName.value = `${user.lastName}`
             edit_age.value = `${user.age}`
             edit_email.value = `${user.email}`
-            // edit_password.value = `${user.password}`
         })
     } else {
         alert(`Error, ${edit.status}`)
